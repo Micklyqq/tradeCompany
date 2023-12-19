@@ -19,7 +19,6 @@ export class UsersController {
 
   @ApiOperation({ summary: "Получение всех пользователей" })
   @ApiResponse({ status: 200, type: [User] })
-  @UseGuards(JwtAuthGuard)
   @Get()
   getAll() {
     return this.userService.getAllUsers();
