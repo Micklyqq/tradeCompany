@@ -28,7 +28,16 @@ export class UsersService {
       ...dto,
       password: hashPassword,
     });
-    const role = await this.roleService.getRoleByName("USER");
+    let role = await this.roleService.getRoleByName("USER");
+    console.log(role)
+    if(!role){
+      
+      role = await this.roleService.createRole({name:"USER",description:"USER ROLE"})
+      console.log("ROLE",role)
+      await user.$set("roles", [role.id]);
+      user.roles = [role];
+      return user;
+    }
     await user.$set("roles", [role.id]);
     user.roles = [role];
     return user;
