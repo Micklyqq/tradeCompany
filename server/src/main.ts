@@ -12,6 +12,7 @@ async function bootstrap() {
     .setDescription("Документация REST API")
     .setVersion("1.0.0")
     .addTag("TRADECOMP")
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup("/api/docs", app, document);

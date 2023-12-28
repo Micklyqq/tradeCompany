@@ -43,7 +43,7 @@ export class User extends Model<User, UserCreateAttrs> {
   @Column({ type: DataType.STRING, allowNull: false })
   lastname: string;
 
-  @ApiProperty({ example: "12345", description: "Пароль пользователя" })
+  @ApiProperty({ example: "+3753328389", description: "Телефон" })
   @Column({ type: DataType.STRING, allowNull: true, defaultValue: null })
   phone: string;
 
