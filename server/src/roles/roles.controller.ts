@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Post, UsePipes, ValidationPipe } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { RolesService } from "./roles.service";
 import { CreateRoleDto } from "./dto/create-role.dto";
@@ -11,6 +11,7 @@ export class RolesController {
 
   @ApiOperation({ summary: "Создание роли" })
   @ApiResponse({ status: 200, type: Role })
+  @UsePipes(ValidationPipe)
   @Post()
   create(@Body() dto: CreateRoleDto) {
     return this.roleService.createRole(dto);

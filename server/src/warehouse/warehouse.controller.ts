@@ -8,6 +8,8 @@ import {
   Put,
   UploadedFile,
   UseInterceptors,
+  UsePipes,
+  ValidationPipe,
 } from "@nestjs/common";
 import { WarehouseService } from "./warehouse.service";
 import { CreateProductDto } from "src/products/dto/create-product.dto";
@@ -36,6 +38,7 @@ export class WarehouseController {
     summary: "Добавление продукта, в параметрах указывается id офиса",
   })
   @ApiResponse({ status: 200, type: Product })
+  @UsePipes(ValidationPipe)
   @Post("/:id")
   addProduct(@Param("id") officeId: number, @Body() dto: CreateProductDto) {
     return this.warehouseService.addProduct(dto, officeId);
