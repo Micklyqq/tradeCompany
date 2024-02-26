@@ -16,6 +16,7 @@ interface ProductCreateAttrs {
   quantity: number;
   price: number;
   logo: string;
+  isDeleted:boolean;
 }
 
 @Table({ tableName: "products" })
@@ -54,6 +55,13 @@ export class Product extends Model<Product, ProductCreateAttrs> {
     type: DataType.STRING,
   })
   logo: string;
+
+  @ApiProperty({ example: false, description: "Удален ли продукт" })
+  @Column({
+    type: DataType.BOOLEAN,
+    defaultValue: false, // Значение по умолчанию будет false
+  })
+  isDeleted: boolean;
 
   @ForeignKey(() => Warehouse)
   warehouseId: number;

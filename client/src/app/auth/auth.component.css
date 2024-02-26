@@ -1,0 +1,46 @@
+.auth-content{
+  background-color: #013A40;
+  font-family: "Raleway", sans-serif;
+width: 35%;
+
+  color: white;
+  margin: 0 auto;
+  margin-top: 20vh;
+  padding: 2vw;
+  border-radius: 5px;
+}
+.auth-content form{
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  font-weight: bold;
+}
+.auth-content button{
+  background-color: #05F2DB;
+  margin-top: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.auth-content button:hover{
+  background-color: red;
+  color: white;
+}
+
+.auth-content input{
+  margin-top: 1vh;
+}
+.auth-content h1{
+  text-align: center;
+}
+
+.error{
+  color:red;
+}
+
+
+.go-to-reg{
+  color: #05F2DB;
+  cursor: pointer;
+}
+

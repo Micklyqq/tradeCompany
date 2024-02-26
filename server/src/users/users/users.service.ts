@@ -6,11 +6,12 @@ import { RolesService } from "src/roles/roles.service";
 import { AddRoleDto } from "./dto/add-role.dto";
 import * as bcrypt from "bcryptjs";
 import { UpdateUserDto } from "./dto/update-user.dto";
+import {AuthService} from "../../auth/auth.service";
 @Injectable()
 export class UsersService {
   constructor(
     @InjectModel(User) private userRepository: typeof User,
-    private roleService: RolesService
+    private roleService: RolesService,
   ) {}
 
   async createUser(dto: CreateUserDto) {

@@ -1,14 +1,16 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/sequelize";
-import { Product } from "./products.model";
-import { CreateProductDto } from "./dto/create-product.dto";
-import { UpdateProductDto } from "./dto/update-product.dto";
-import { FilesService } from "src/files/files.service";
+import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
+import {InjectModel} from "@nestjs/sequelize";
+import {Product} from "./products.model";
+import {CreateProductDto} from "./dto/create-product.dto";
+import {UpdateProductDto} from "./dto/update-product.dto";
+import {FilesService} from "src/files/files.service";
+import {Sale} from "../sales/sales.model";
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectModel(Product) private productRepository: typeof Product,
+    @InjectModel(Sale) private saleRepository:typeof Sale,
     private fileService: FilesService
   ) {}
 
@@ -20,7 +22,7 @@ export class ProductsService {
 
   async getAllProductsInWarehouse(warehouseId: number) {
     const products = await this.productRepository.findAll({
-      where: { warehouseId },
+      where: { warehouseId,isDeleted:false },
     });
     return products;
   }
@@ -39,11 +41,11 @@ export class ProductsService {
         HttpStatus.BAD_REQUEST
       );
     }
-    await this.productRepository.destroy({ where: { id: productId } });
-    return { message: "Продукт успешно удалён" };
+    await this.productRepository.update({isDeleted:true},{where:{id:productId}});
+    return { productId:productId };
   }
 
-  async updateProduct(productId: number, dto: UpdateProductDto, logo) {
+  async updateProduct(productId: number, dto: UpdateProductDto, logo = undefined) {
     const product = await this.productRepository.findByPk(productId);
     if (!product) {
       throw new HttpException(
@@ -61,4 +63,6 @@ export class ProductsService {
     await product.update(dto);
     return product;
   }
+
+
 }

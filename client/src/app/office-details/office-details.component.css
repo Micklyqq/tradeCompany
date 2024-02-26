@@ -1,0 +1,89 @@
+.office-content{
+  display: flex;
+}
+
+.office-details{
+  display: flex;
+  margin-top: 50px;
+}
+
+.office-info{
+  display: flex;
+  padding: 20px;
+  width: 650px;
+  height: 340px;
+  margin-bottom: 40px;
+  background-color: #FFFFFF;
+}
+
+.office-info img{
+  max-width: 170px;
+  max-height: 200px;
+  margin-right: 20px;
+}
+
+
+
+.top-sellers h2{
+  color: #828282;
+  font-size: 25px;
+}
+
+.nav-bar{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  height: 100vh;
+  padding: 20px;
+  background-color: #FFFFFF;
+  color: #ABB3B9;
+}
+
+h1{
+  color: black;
+}
+
+.logo-title{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.nav-bar li{
+  cursor: pointer;
+  margin-top: 40px;
+}
+
+.nav-bar li:hover{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 235px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: indianred;
+  color:#F6FAFF;
+}
+
+.nav-bar li:active{
+  transform: translateY(3px);
+
+}
+
+.active{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 235px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #40A3FF;
+  color:#F6FAFF;
+}
+
+.office-details-column{
+  margin-left: 50px;
+}
+
+

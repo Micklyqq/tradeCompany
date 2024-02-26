@@ -1,0 +1,51 @@
+<div *ngIf="dialogData.dialogName === 'addProduct'">
+  <h2 class="dialog-title">Добаление товара</h2>
+  <mat-dialog-content>
+    <form [formGroup]="addProductForm" class="dialog-content">
+      <mat-form-field>
+        <mat-label>Название продукта</mat-label>
+        <input matInput formControlName="name" type="text">
+        <mat-error *ngIf="submitted && addProductForm.get('name')?.errors?.['required']">Должно быть заполнено</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Количество</mat-label>
+        <input matInput formControlName="quantity" type="number">
+        <mat-error *ngIf="submitted && addProductForm.get('quantity')?.errors?.['required']">Должно быть заполнено</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>Цена</mat-label>
+        <input matInput formControlName="price" type="number">
+        <mat-error *ngIf="submitted && addProductForm.get('price')?.errors?.['required']">Должно быть заполнено</mat-error>
+      </mat-form-field>
+    </form>
+    <mat-error *ngIf="error">{{error}}</mat-error>
+  </mat-dialog-content>
+
+  <mat-dialog-actions>
+    <button type="submit" (click)="onSubmit()" class="dialog-button">Добавить</button>
+  </mat-dialog-actions>
+</div>
+<div *ngIf="dialogData.dialogName === 'updateProduct' && dialogData.productId">
+  <h2 class="dialog-title">Изменение товара</h2>
+  <mat-dialog-content>
+  <form [formGroup]="updateProductForm" class="dialog-content">
+    <mat-form-field>
+      <mat-label>Название</mat-label>
+    <input matInput formControlName="name" placeholder="Название" type="text">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Количество</mat-label>
+    <input matInput formControlName="quantity" placeholder="Количество" type="number">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Цена</mat-label>
+    <input matInput formControlName="price" placeholder="Цена" type="number">
+    </mat-form-field>
+  </form>
+    </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="submit" (click)="(updateSubmit(dialogData.productId))" class="dialog-button">Применить</button>
+  </mat-dialog-actions>
+</div>

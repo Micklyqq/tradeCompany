@@ -1,0 +1,11 @@
+<div class="office-list">
+    <div *ngFor="let office of officeList" class="office-element">
+      <img [src]="environment.apiUrl + '/' + office.logo" alt="NOT FOUND" (error)="onImageLoadError($event)">
+      <div class="office-info">
+        <h2>{{office.name}}</h2>
+        <p>Адрес: {{office.adress}}</p>
+      </div>
+      <div  class="go-to-office-button" [routerLink]="['/offices',office.id]">Перейти</div>
+    </div>
+</div>
+

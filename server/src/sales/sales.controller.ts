@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
 import { SalesService } from "./sales.service";
 import { CreateSaleDto } from "./dto/create-sale.dto";
 import {
@@ -8,6 +8,7 @@ import {
   ApiTags,
 } from "@nestjs/swagger";
 import { Sale } from "./sales.model";
+import {SalesByDateDto} from "./dto/sales-by-date.dto";
 @ApiBearerAuth()
 @ApiTags("Продажи")
 @Controller("sales")
@@ -30,5 +31,36 @@ export class SalesController {
   @Get("/:id")
   getOne(@Param("id") saleId: number) {
     return this.saleService.getOne(saleId);
+  }
+
+  @ApiOperation({
+    summary:"Получение всех продаж офиса",
+  })
+  @ApiResponse({status:200,type:Sale})
+  @Get('/getAll/:id')
+  getAll(@Param('id') officeId:number){
+    return this.saleService.getAll(officeId);
+  }
+
+  @ApiOperation({
+    summary:"Удаление продажи",
+  })
+  @ApiResponse({status:200,type:Sale})
+  @Delete('/:id')
+  delete(@Param('id') saleId:number){
+    return this.saleService.delete(saleId);
+  }
+
+  @ApiOperation({summary:'Получение 5 наиболее продаваемых товаров,указывается id офиса'})
+  @Get('/topSeller/:id')
+  getTopSellers(@Param('id') warehouseId:number){
+    return this.saleService.getTopSellers(warehouseId);
+  }
+
+  @ApiOperation({summary:'Получение продаж за конкретную дату или промежуток'})
+  @Post('/salesByDate')
+  getSalesByDate(@Body()salesByDateDto:SalesByDateDto){
+    return this.saleService.getSalesByDate(salesByDateDto);
+
   }
 }

@@ -1,0 +1,31 @@
+<div *ngIf="dialogData.dialogName === 'addSale'">
+  <h2 class="dialog-title">Добаление товара</h2>
+  <mat-dialog-content>
+    <form [formGroup]="addSaleForm" class="dialog-content">
+      <mat-form-field>
+        <mat-label>Продукт</mat-label>
+        <mat-select  formControlName="productId" (selectionChange)="onProductSelected($event.value)">
+          <mat-option *ngFor="let product of products" [value]="product.id">{{product.name}}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="submitted && addSaleForm.get('productId')?.errors?.['required']">Должно быть заполнено</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>Количество</mat-label>
+        <input matInput formControlName="quantity" type="number">
+        <mat-error *ngIf="submitted && addSaleForm.get('quantity')?.errors?.['required']">Должно быть заполнено</mat-error>
+      </mat-form-field>
+      <p *ngIf="selectedProduct">На складе: {{selectedProduct.quantity}} </p>
+      <mat-form-field>
+        <mat-label>Дата</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="date">
+        <mat-hint>MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </form>
+    <mat-error *ngIf="error">{{error}}</mat-error>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+    <button type="submit" (click)="onSubmit()" class="dialog-button">Добавить</button>
+  </mat-dialog-actions>
+</div>

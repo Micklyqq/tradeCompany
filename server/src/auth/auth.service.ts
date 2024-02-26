@@ -37,7 +37,7 @@ export class AuthService {
     return this.generateToken(user);
   }
 
-  private async generateToken(user: User) {
+  public async generateToken(user: User) {
     const payload = { email: user.email, id: user.id, roles: user.roles };
     return {
       token: this.jwtService.sign(payload),
@@ -46,14 +46,20 @@ export class AuthService {
 
   private async validateUser(userDto: UserLoginDto) {
     const user = await this.userService.getUserByEmail(userDto.email);
+    if (!user){
+      throw new UnauthorizedException({ message: "Неверый email или пароль" });
+    }
     const passwordEquals = await bcrypt.compare(
       userDto.password,
       user.password
     );
+    if(!passwordEquals){
+      throw new UnauthorizedException({ message: "Неверый email или пароль" });
+    }
     if (user && passwordEquals) {
       return user;
     }
 
-    throw new UnauthorizedException({ message: "Неверый email или пароль" });
+
   }
 }

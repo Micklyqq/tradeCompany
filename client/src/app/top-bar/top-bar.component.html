@@ -1,0 +1,12 @@
+<ul class="nav-bar" *ngIf="!isOfficeDetailsPage">
+  <div class="logo-title">
+    <img src="../../assets/img/logo.svg">
+    <h1>Trade Company</h1>
+  </div>
+    <li routerLink="/offices" [routerLinkActive]="['active']">Офисы</li>
+    <li *ngIf="!token" routerLink="/auth" [routerLinkActive]="['active']">Авторизация</li>
+    <li *ngIf="token" routerLink="/profile" [routerLinkActive]="['active']">Профиль</li>
+</ul>
+
+
+

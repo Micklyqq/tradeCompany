@@ -1,0 +1,8 @@
+<div class="top-sellers-list" *ngIf="topSellers">
+  <h2>Наиболее продаваемые товары:</h2>
+  <div class="top-seller-element"  *ngFor="let topSeller of topSellers">
+    <h3>{{topSeller.product.name}}</h3>
+    <p>Цена: {{topSeller.product.price | currency}}</p>
+    <p>Количество продаж: {{topSeller.totalquantitysold}}</p>
+  </div>
+</div>

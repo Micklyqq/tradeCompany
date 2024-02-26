@@ -1,0 +1,16 @@
+<div class="add-product-button" (click)="openDialog('addProduct')">Добавить на склад</div>
+<div *ngIf="products" class="product-root">
+  <div class="product-list">
+    <div class="product-element"  *ngFor="let product of products">
+      <img [src]="productDefaultLogo">
+      <div>
+        <p>Название: {{product.name}}</p>
+        <p>Цена: {{product.price | currency}}</p>
+        <p>Количество: {{product.quantity}} </p>
+        <div (click)="openDialog('updateProduct',product.id)" class="change-product">Изменить</div>
+        <div (click)="deleteProduct(product.id)" class="del-product-button">Удалить</div>
+      </div>
+    </div>
+  </div>
+
+</div>

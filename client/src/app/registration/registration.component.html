@@ -1,0 +1,36 @@
+<div class="auth-content">
+  <h1>Авторизация</h1>
+  <form [formGroup]="regForm" (ngSubmit)="onSubmit()">
+    <label for="firstname">Имя:</label>
+    <input formControlName="firstname" id="firstname" type="text" placeholder="Введите имя">
+    <div *ngIf="submitted && regForm.get('firstname')?.errors">
+      <div *ngIf="regForm.get('firstname')?.errors?.['required']" class="error">Поле не может быть пустым</div>
+      <div *ngIf="regForm.get('firstname')?.errors?.['maxlength']" class="error">Длина не может превышать 64 символа</div>
+    </div>
+    <label for="lastname">Фамилия:</label>
+    <input formControlName="lastname" id="lastname" type="text" placeholder="Введите фамилию">
+    <label for="email">Email:</label>
+    <input formControlName="email" id="email" type="text" placeholder="Введите email">
+    <div *ngIf="submitted && regForm.get('email')?.errors">
+      <div *ngIf="regForm.get('email')?.errors?.['required']" class="error">Поле не может быть пустым</div>
+      <div *ngIf="regForm.get('email')?.errors?.['email']" class="error">Неверный email</div>
+      <div *ngIf="regForm.get('email')?.errors?.['maxlength']" class="error">Длина не может превышать 64 символа</div>
+      <div *ngIf="regForm.get('email')?.errors?.['minlength']" class="error">Длина не может быть меньше 6 символов</div>
+    </div>
+    <label for="password">Password:</label>
+    <input formControlName="password" id="password" type="password" placeholder="Введите пароль">
+    <div *ngIf="submitted && regForm.get('password')?.errors">
+      <div *ngIf="regForm.get('password')?.errors?.['required']" class="error">Поле не может быть пустым</div>
+      <div *ngIf="regForm.get('password')?.errors?.['maxlength']" class="error">Длина не может превышать 32 символа</div>
+      <div *ngIf="regForm.get('password')?.errors?.['minlength']" class="error">Длина не может быть меньше 6 символов</div>
+    </div>
+    <label for="phone">Телефон:</label>
+    <input formControlName="phone" id="phone" type="tel" placeholder="Введите номер телефона" appPhoneInput>
+    <div *ngIf="submitted && regForm.get('password')?.errors">
+      <div *ngIf="regForm.get('phone')?.errors?.['required']" class="error">Поле не может быть пустым</div>
+    </div>
+    <button type="submit">Зарегистрироваться</button>
+    <div *ngIf="error" class="error">{{error}}</div>
+  </form>
+  <p>Нет аккаунта? <span class="go-to-reg" routerLink="/registration">Зарегистрируйтесь</span></p>
+</div>

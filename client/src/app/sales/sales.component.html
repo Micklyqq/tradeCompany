@@ -1,0 +1,26 @@
+<div class="add-sale-button" (click)="openDialog('addSale',officeId)">Добавить продажу</div>
+<div *ngIf="sales">
+
+  <div class="sale-list">
+    <mat-card *ngFor="let sale of sales" class="sale-element">
+      <mat-card-header>
+        <mat-card-title>
+          {{sale.date | date}}
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>Товар: {{sale.product.name}}</p>
+        <p>Количество: {{sale.quantity}}</p>
+        <p>Доход: {{sale.amount}}</p>
+        <div (click)="deleteSale(sale.id)" class="del-sale-button">Удалить</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+</div>
+
+
+
+
+
+

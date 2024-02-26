@@ -1,0 +1,102 @@
+.product-list{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+
+}
+.product-element{
+  display: flex;
+  flex-direction: row;
+  background-color: #ffffff;
+  font-weight: bold;
+  color: black;
+ width: 500px;
+  height: 200px;
+  margin: 20px;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.product-element img{
+  margin-right: 30px;
+}
+.add-product-button{
+ display: flex;
+  justify-content: center;
+  align-items: center;
+ margin-top: 20px;
+  background-color: #40A3FF;
+  color: #FFFFFF;
+  padding: 20px;
+  font-weight: bold;
+  width: 200px;
+  margin-left:20px;
+  border-radius: 10px;
+}
+
+.add-product-button:hover{
+  background-color: indianred;
+  cursor: pointer;
+}
+
+.add-product-button:active{
+  transform: translateY(3px);
+}
+
+.add-product-form{
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+.add-product-form input{
+  margin-bottom: 5px;
+}
+
+.error{
+  color:red;
+}
+
+.del-product-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  background-color: #40A3FF;
+  color: #FFFFFF;
+  border-radius: 10px;
+}
+
+.del-product-button:hover{
+  background-color: indianred;
+  color: white;
+  cursor: pointer;
+}
+.del-product-button:active{
+  transform: translateY(2px);
+}
+
+.change-product{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  background-color: #40A3FF;
+  color: #FFFFFF;
+
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+
+}
+
+.change-product:hover{
+  cursor: pointer;
+  background-color: indianred;
+  color:white;
+}
+
+.change-product:active{
+  transform: translateY(2px);
+}
+

@@ -1,0 +1,38 @@
+.welcome-content{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-image: url(../../assets/img/stockvault-trade-and-commerce-world-map-over-city-at-night240624.jpg);
+  background-size: cover; /* Масштабирует изображение так, чтобы оно полностью покрывало заданный элемент */
+  background-repeat: no-repeat; /* Запрещает повторение изображения */
+  height: 1610px;
+  color: white;
+
+}
+h1{
+  margin-top: 300px;
+  font-family: "Raleway", sans-serif;
+  font-weight: bold;
+  font-size: 2vw;
+}
+.welcome-button{
+  font-family: "Raleway", sans-serif;
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #038C8C;
+  width: 16vw;
+  height: 5vh;
+  margin-bottom: 10px;
+}
+
+.welcome-button:hover{
+  background-color: #005081;
+  cursor: pointer;
+}
+.welcome-button:active{
+  background-color: #05F2DB;
+  transform: translateY(5px);
+}
+
