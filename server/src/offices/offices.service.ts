@@ -1,19 +1,22 @@
-import { HttpException, HttpStatus, Injectable } from "@nestjs/common";
-import { InjectModel } from "@nestjs/sequelize";
-import { Office } from "./offices.model";
-import { CreateOfficeDto } from "./dto/create-office.dto";
-import { UpdateOfficeDto } from "./dto/update-office.dto";
-import { WarehouseService } from "src/warehouse/warehouse.service";
-import { Warehouse } from "src/warehouse/warehouse.model";
-import { FilesService } from "src/files/files.service";
+import {HttpException, HttpStatus, Injectable} from "@nestjs/common";
+import {InjectModel} from "@nestjs/sequelize";
+import {Office} from "./offices.model";
+import {CreateOfficeDto} from "./dto/create-office.dto";
+import {UpdateOfficeDto} from "./dto/update-office.dto";
+import {WarehouseService} from "src/warehouse/warehouse.service";
+import {Warehouse} from "src/warehouse/warehouse.model";
+import {FilesService} from "src/files/files.service";
+import {User} from "../users/users/users.model";
+import {Role} from "../roles/roles.model";
 
 @Injectable()
 export class OfficesService {
   constructor(
     @InjectModel(Office) private officeRepository: typeof Office,
     @InjectModel(Warehouse) private warehouseRepository: typeof Warehouse,
+    @InjectModel(User) private userRepository:typeof User,
     private warehouseService: WarehouseService,
-    private fileService: FilesService
+    private fileService: FilesService,
   ) {}
 
   async createOffice(dto: CreateOfficeDto) {
@@ -92,5 +95,26 @@ export class OfficesService {
     await this.warehouseRepository.destroy({ where: { officeId: id } });
     await this.officeRepository.destroy({ where: { id } });
     return { message: `Офис ${id} был успешно удалён!` };
+  }
+
+  async getWorkers(officeId: number) {
+    const office = await this.officeRepository.findByPk(officeId);
+    if(!office){
+      throw new HttpException(
+          'Такого офиса не существует',
+          HttpStatus.BAD_REQUEST
+      );
+    }
+    return await this.userRepository.findAll({
+      where: {officeId},
+      attributes:{exclude:['password','createdAt','updatedAt']},
+      include:[
+        {
+          model:Role,
+          through:{attributes:[]},
+          attributes:['id','name']
+        }
+      ]
+    });
   }
 }

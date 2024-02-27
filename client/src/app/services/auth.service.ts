@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Login,LoginResponse} from "../interfaces/login";
-import {Observable} from "rxjs";
+import {Observable, Subject, tap} from "rxjs";
 import {environment} from "../../environments/environment.development";
 import {Registration, RegistrationResponse} from "../interfaces/registration";
 
@@ -9,6 +9,8 @@ import {Registration, RegistrationResponse} from "../interfaces/registration";
   providedIn: 'root'
 })
 export class AuthService {
+
+  private workersListChanged = new Subject<void>()
 
   authUrl = environment.apiUrl+"/auth/login";
   regUrl = environment.apiUrl+"/auth/registration"
@@ -19,8 +21,13 @@ export class AuthService {
   }
 
   userReg(user:Registration):Observable<RegistrationResponse>{
-    return this.http.post<RegistrationResponse>(this.regUrl,user);
+    return this.http.post<RegistrationResponse>(this.regUrl,user).pipe(
+      tap(()=>this.workersListChanged.next())
+    );
   }
 
+  onWorkersListChanged(){
+    return this.workersListChanged.asObservable();
+  }
 
 }

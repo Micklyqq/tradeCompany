@@ -1,6 +1,6 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {NgIf} from "@angular/common";
+import {NgForOf, NgIf} from "@angular/common";
 import {
   MAT_DIALOG_DATA,
   MatDialogActions,
@@ -11,27 +11,33 @@ import {
 import {MatFormField, MatFormFieldModule} from "@angular/material/form-field";
 import {MatInput} from "@angular/material/input";
 import {MatButton} from "@angular/material/button";
-import {ProductService} from "../../services/product.service";
-import {DialogProduct, DialogWorkers} from "../../interfaces/dialog";
+import {DialogWorkers} from "../../interfaces/dialog";
 import {AuthService} from "../../services/auth.service";
 import {PhoneInputDirective} from "../../directives/phone-input.directive";
+import {MatOption} from "@angular/material/autocomplete";
+import {MatSelect} from "@angular/material/select";
+import {RoleResponse} from "../../interfaces/role";
+import {RoleService} from "../../services/role.service";
 
 @Component({
   selector: 'app-workers-dialog',
   standalone: true,
-  imports: [
-    FormsModule,
-    NgIf,
-    ReactiveFormsModule,
-    MatDialogContent,
-    MatFormField,
-    MatDialogActions,
-    MatFormFieldModule,
-    MatInput,
-    MatButton,
-    MatDialogModule,
-    PhoneInputDirective
-  ],
+    imports: [
+        FormsModule,
+        NgIf,
+        ReactiveFormsModule,
+        MatDialogContent,
+        MatFormField,
+        MatDialogActions,
+        MatFormFieldModule,
+        MatInput,
+        MatButton,
+        MatDialogModule,
+        PhoneInputDirective,
+        MatOption,
+        MatSelect,
+        NgForOf
+    ],
   templateUrl: './workers-dialog.component.html',
   styleUrl: './workers-dialog.component.css'
 })
@@ -41,7 +47,8 @@ export class WorkersDialogComponent implements OnInit{
     private formBuilder:FormBuilder,
     private authService:AuthService,
     public dialogRef:MatDialogRef<WorkersDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public dialogData:DialogWorkers
+    @Inject(MAT_DIALOG_DATA) public dialogData:DialogWorkers,
+    private roleService:RoleService,
   ) {
   }
   submitted = false;
@@ -53,13 +60,17 @@ export class WorkersDialogComponent implements OnInit{
   addUserForm:FormGroup = new FormGroup({});
   updateUserForm:FormGroup = new FormGroup({});
 
+  roles:RoleResponse[]|undefined;
+  selectedRole:number|undefined;
+
   ngOnInit() {
     this.addUserForm = this.formBuilder.group(({
       email:['', [Validators.required, Validators.email, Validators.maxLength(64),Validators.minLength(6)]],
       password:['',[Validators.required, Validators.maxLength(32),Validators.minLength(6)]],
       firstname:['',[Validators.required,Validators.maxLength(64)]],
       lastname:['',[Validators.required,Validators.maxLength(64)]],
-      phone:['',[Validators.required]]
+      phone:['',[Validators.required]],
+      roleId:['',[Validators.required]]
     }));
     this.updateUserForm = this.formBuilder.group(({
       email:['',[Validators.required,Validators.email,Validators.maxLength(64)]],
@@ -68,6 +79,9 @@ export class WorkersDialogComponent implements OnInit{
       lastname:['',[Validators.required],Validators.maxLength(32)],
       phone:['',[Validators.required]],
     }))
+    this.roleService.getAllRoles().subscribe(data=>{
+      this.roles = data;
+    })
   }
 
   onSubmit(){
@@ -80,9 +94,9 @@ export class WorkersDialogComponent implements OnInit{
         firstname:this.addUserForm.value.firstname,
         lastname:this.addUserForm.value.lastname,
         phone:this.addUserForm.value.phone,
-        officeId:officeId
+        officeId:officeId,
+        roleId:parseInt(this.addUserForm.value.roleId)
       }
-      console.log('yatuta')
       this.authService.userReg(data).subscribe(()=>{
 
       },(error)=>{
@@ -94,6 +108,8 @@ export class WorkersDialogComponent implements OnInit{
 
     }
   }
+
+
 
   updateSubmit(productId:number){
 

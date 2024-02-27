@@ -29,15 +29,12 @@ export class UsersService {
       ...dto,
       password: hashPassword,
     });
-    let role = await this.roleService.getRoleByName("USER");
-    console.log(role)
+    let role = await this.roleService.getRoleById(dto.roleId);
     if(!role){
-      
-      role = await this.roleService.createRole({name:"USER",description:"USER ROLE"})
-      console.log("ROLE",role)
-      await user.$set("roles", [role.id]);
-      user.roles = [role];
-      return user;
+      throw new HttpException(
+          'Роль не найдена',
+          HttpStatus.BAD_REQUEST
+      );
     }
     await user.$set("roles", [role.id]);
     user.roles = [role];
@@ -101,4 +98,6 @@ export class UsersService {
     await this.userRepository.destroy({ where: { id: userId } });
     return { message: "Пользователь успешно удалён" };
   }
+
+
 }

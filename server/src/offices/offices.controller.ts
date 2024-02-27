@@ -25,6 +25,8 @@ import {
 } from "@nestjs/swagger";
 import { Office } from "./offices.model";
 import { FileInterceptor } from "@nestjs/platform-express";
+import {User} from "../users/users/users.model";
+import {UserResponseDto} from "../users/users/dto/user-response.dto";
 
 @ApiBearerAuth()
 @ApiTags("Офисы")
@@ -45,6 +47,13 @@ export class OfficesController {
   @Get()
   getAll() {
     return this.officeService.getAllOffices();
+  }
+
+  @ApiOperation({summary:"Получение всех пользователей в офисе"})
+  @ApiResponse({status:200,type:[UserResponseDto]})
+  @Get('/workers/:officeId')
+  getAllWorkers(@Param('officeId') officeId:number){
+    return this.officeService.getWorkers(officeId);
   }
 
   @ApiOperation({ summary: "Получение офиса по id" })

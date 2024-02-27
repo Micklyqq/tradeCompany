@@ -48,6 +48,8 @@ export class UsersController {
     return this.userService.getAllUsers();
   }
 
+
+
   @ApiOperation({ summary: "Выдать роль" })
   @ApiResponse({ status: 200, type: [User] })
   @Roles("ADMIN")

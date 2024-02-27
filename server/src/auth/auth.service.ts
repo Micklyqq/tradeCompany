@@ -34,7 +34,11 @@ export class AuthService {
     const user = await this.userService.createUser(
       userDto
     );
-    return this.generateToken(user);
+    return {
+      statusCode:HttpStatus.OK,
+      message:'Работник успешно зарегистрирован',
+      user: user.email
+    }
   }
 
   public async generateToken(user: User) {

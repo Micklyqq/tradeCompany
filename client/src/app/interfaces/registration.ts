@@ -4,7 +4,8 @@ export interface Registration{
   firstname:string,
   lastname:string,
   phone:string,
-  officeId:number
+  officeId:number,
+  roleId:number,
 }
 
 export interface RegistrationResponse{

@@ -7,14 +7,15 @@ import { Warehouse } from "src/warehouse/warehouse.model";
 import { WarehouseModule } from "src/warehouse/warehouse.module";
 import { Sale } from "src/sales/sales.model";
 import { FilesModule } from "src/files/files.module";
+import {User} from "../users/users/users.model";
 
 @Module({
   controllers: [OfficesController],
   providers: [OfficesService],
   imports: [
-    SequelizeModule.forFeature([Office, Warehouse, Sale]),
+    SequelizeModule.forFeature([Office, Warehouse, Sale,User]),
     WarehouseModule,
-    FilesModule,
+    FilesModule
   ],
 })
 export class OfficesModule {}
