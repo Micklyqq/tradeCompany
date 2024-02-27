@@ -8,6 +8,7 @@ import {Observable, Subject} from "rxjs";
 import {SalesService} from "../services/sales.service";
 import {MatDialog} from "@angular/material/dialog";
 import {AddProductDialogComponent} from "../dialogs/add-product-dialog/add-product-dialog.component";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-product',
@@ -16,7 +17,8 @@ import {AddProductDialogComponent} from "../dialogs/add-product-dialog/add-produ
     NgIf,
     NgForOf,
     ReactiveFormsModule,
-    CurrencyPipe
+    CurrencyPipe,
+    MatProgressSpinner
   ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
@@ -39,6 +41,8 @@ export class ProductComponent implements OnInit{
 
   products:ProductResponse[] | undefined;
 
+  isLoading = true;
+
 
   ngOnInit() {
     if(this.officeId){
@@ -48,7 +52,10 @@ export class ProductComponent implements OnInit{
       this.productService.onProductListChanged().subscribe(()=>{
         this.refreshProducts(this.officeId);
       })
-      this.productService.getAllProducts(this.officeId).subscribe((data)=>this.products = data);
+      this.productService.getAllProducts(this.officeId).subscribe((data)=>{
+        this.products = data;
+        this.isLoading = false;
+      });
 
 
     }
@@ -68,7 +75,11 @@ openDialog(dialogName:string,productId:number|null=null){
   }
 
   refreshProducts(officeId:any){
-    this.productService.getAllProducts(officeId).subscribe((data)=>this.products = data);
+    this.productService.getAllProducts(officeId).subscribe((data)=>{
+      this.isLoading = true;
+      this.products = data
+      this.isLoading = false;
+    });
   }
 
 

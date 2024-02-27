@@ -8,3 +8,8 @@ export interface DialogSale{
   dialogName:string,
   officeId:number,
 }
+
+export interface DialogWorkers{
+  dialogName:string,
+  officeId:number,
+}

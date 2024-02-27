@@ -1,5 +1,6 @@
 <div class="add-product-button" (click)="openDialog('addProduct')">Добавить на склад</div>
-<div *ngIf="products" class="product-root">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<div *ngIf="products && !isLoading" class="product-root">
   <div class="product-list">
     <div class="product-element"  *ngFor="let product of products">
       <img [src]="productDefaultLogo">

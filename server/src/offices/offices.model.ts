@@ -9,6 +9,7 @@ import {
 } from "sequelize-typescript";
 import { Sale } from "src/sales/sales.model";
 import { Warehouse } from "src/warehouse/warehouse.model";
+import {User} from "../users/users/users.model";
 
 interface OfficeCreateAttrs {
   name: string;
@@ -53,4 +54,7 @@ export class Office extends Model<Office, OfficeCreateAttrs> {
 
   @HasMany(() => Sale)
   sales: Sale[];
+
+  @HasMany(()=>User)
+  users:User[];
 }

@@ -12,6 +12,7 @@ import {ImageLoaderService} from "../services/image-loader.service";
 import {TopSellersComponent} from "../top-sellers/top-sellers.component";
 import {SaleWeekGraphComponent} from "../sale-week-graph/sale-week-graph.component";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {WorkersComponent} from "../workers/workers.component";
 
 @Component({
   selector: 'app-office-details',
@@ -24,6 +25,7 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     TopSellersComponent,
     SaleWeekGraphComponent,
     MatProgressSpinner,
+    WorkersComponent,
   ],
   templateUrl: './office-details.component.html',
   styleUrl: './office-details.component.css'
@@ -39,7 +41,7 @@ export class OfficeDetailsComponent implements OnInit,OnDestroy{
 
   officeIdFromRoute:number | undefined;
 
-  currentNavElement:string = 'mainInfo';
+  currentNavElement:string = 'workers';
   dataIsLoading = true;
 
 

@@ -7,7 +7,7 @@
   <li (click)="switchNavigation('mainInfo')" [class.active]="currentNavElement==='mainInfo'">Общая информация</li>
   <li (click)="switchNavigation('products')" [class.active]="currentNavElement==='products'">Товары</li>
   <li (click)="switchNavigation('sales')" [class.active]="currentNavElement==='sales'">Продажи</li>
-  <li>Сотрудники</li>
+  <li (click)="switchNavigation('workers')" [class.active]="currentNavElement==='workers'">Сотрудники</li>
 </ul>
 
 <div class="office-details" *ngIf="currentNavElement==='mainInfo' && !dataIsLoading">
@@ -28,6 +28,7 @@
 </div>
     <app-product *ngIf="currentNavElement==='products'" [officeId]="officeIdFromRoute"></app-product>
   <app-sales *ngIf="currentNavElement==='sales'" [officeId]="officeIdFromRoute"></app-sales>
+  <app-workers *ngIf="currentNavElement==='workers'" [officeId]="officeIdFromRoute"></app-workers>
   <mat-spinner *ngIf="dataIsLoading"></mat-spinner>
 </div>
 

@@ -9,14 +9,15 @@ import {SalesService} from "../services/sales.service";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SaleResponse, SalesByDate} from "../interfaces/sale";
 import {DateService} from "../services/date.service";
-import {DatePipe} from "@angular/common";
+import {DatePipe, NgIf} from "@angular/common";
 import {MatInput} from "@angular/material/input";
 import {FiveDayRangeSelectionStrategy} from "../services/date-range-picker-strategy.service";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-sale-week-graph',
   standalone: true,
-  imports: [MatFormFieldModule, MatDatepickerModule, DatePipe, ReactiveFormsModule, MatInput],
+  imports: [MatFormFieldModule, MatDatepickerModule, DatePipe, ReactiveFormsModule, MatInput, MatProgressSpinner, NgIf],
   providers: [
     provideNativeDateAdapter(),
     {
@@ -42,6 +43,7 @@ export class SaleWeekGraphComponent implements OnInit{
   saleInterval:SalesByDate | undefined;
 
   saleForm:FormGroup = new FormGroup({});
+  isLoading = true;
 
 
 
@@ -60,6 +62,8 @@ export class SaleWeekGraphComponent implements OnInit{
       this.saleService.getSalesByDate(this.saleInterval).subscribe(data=>{
         this.sales = data;
         this.dateService.createSalesChart(this.salesChartCanvas.nativeElement,this.sales)
+        this.isLoading = false;
+        console.log(this.isLoading)
       });
     }
 
@@ -72,6 +76,7 @@ export class SaleWeekGraphComponent implements OnInit{
     const endDate = this.saleForm.get('endDate')?.value;
 
     if(startDate && endDate){
+      this.isLoading = true;
       if(this.saleInterval){
         this.saleInterval.startDate = startDate;
         this.saleInterval.endDate = endDate;
@@ -90,6 +95,7 @@ export class SaleWeekGraphComponent implements OnInit{
           ctx.clearRect(0, 0, canvas.width, canvas.height); // Очистить существующий график
           this.dateService.createSalesChart(canvas, this.sales); // Создать новый график
         }
+        this.isLoading = false;
 
       });
     }

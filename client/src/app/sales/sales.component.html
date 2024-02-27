@@ -1,6 +1,6 @@
 <div class="add-sale-button" (click)="openDialog('addSale',officeId)">Добавить продажу</div>
 <div *ngIf="sales">
-
+<mat-spinner *ngIf="isLoading"></mat-spinner>
   <div class="sale-list">
     <mat-card *ngFor="let sale of sales" class="sale-element">
       <mat-card-header>

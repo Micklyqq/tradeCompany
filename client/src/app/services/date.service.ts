@@ -65,6 +65,8 @@ export class DateService {
     const month = (date.getMonth() + 1).toString().padStart(2, '0');
     const day = date.getDate().toString().padStart(2, '0');
     const year = date.getFullYear();
+    console.log(date);
+    console.log(`${year}-${month}-${day}`)
     return `${year}-${month}-${day}`;
   }
 
@@ -73,6 +75,7 @@ export class DateService {
     if (this.chart) {
       this.chart.destroy(); // Уничтожаем предыдущий график, если он существует
     }
+    console.log(sales);
     this.chart = new Chart(canvas,{
       type:'bar',
       data:{

@@ -1,6 +1,7 @@
 <div class="sale-week-root">
   <h3>Общий доход</h3>
-  <form [formGroup]="saleForm">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form [formGroup]="saleForm" *ngIf="!isLoading">
     <mat-form-field>
       <mat-date-range-input [rangePicker]="picker">
         <input matStartDate placeholder="Start date" formControlName="startDate" (dateChange)="onDateChange();picker.close()">
@@ -11,5 +12,6 @@
       <mat-date-range-picker #picker></mat-date-range-picker>
     </mat-form-field>
   </form>
-  <canvas #salesChartCanvas></canvas>
+  <canvas #salesChartCanvas ></canvas>
+
 </div>

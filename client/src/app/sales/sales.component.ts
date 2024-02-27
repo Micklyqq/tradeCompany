@@ -10,6 +10,7 @@ import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/mat
 import {MatDialog} from "@angular/material/dialog";
 import {AddProductDialogComponent} from "../dialogs/add-product-dialog/add-product-dialog.component";
 import {SaleDialogComponent} from "../dialogs/sale-dialog/sale-dialog.component";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 
 @Component({
   selector: 'app-sales',
@@ -24,7 +25,8 @@ import {SaleDialogComponent} from "../dialogs/sale-dialog/sale-dialog.component"
     MatCard,
     MatCardHeader,
     MatCardTitle,
-    MatCardContent
+    MatCardContent,
+    MatProgressSpinner
   ],
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
@@ -48,6 +50,8 @@ export class SalesComponent implements OnInit{
 
   products:ProductResponse[] | undefined;
 
+  isLoading = true;
+
   ngOnInit() {
     if(this.officeId){
       this.productService.onProductListChanged().subscribe(()=>{
@@ -56,8 +60,16 @@ export class SalesComponent implements OnInit{
       this.saleService.onSaleListChanged().subscribe(()=>{
         this.refreshSales(this.officeId);
       })
-     this.saleService.getAllSales(this.officeId).subscribe(data=>this.sales = data);
-   this.productService.getAllProducts(this.officeId).subscribe((data)=>this.products = data);
+     this.saleService.getAllSales(this.officeId).subscribe(data=>{
+       this.isLoading = true;
+       this.sales = data;
+       this.isLoading = false;
+     });
+   this.productService.getAllProducts(this.officeId).subscribe((data)=>{
+     this.isLoading = true;
+     this.products = data;
+     this.isLoading = false;
+   });
 
     }
     else{
@@ -88,10 +100,18 @@ export class SalesComponent implements OnInit{
 
 
   private refreshProducts(officeId:any){
-    this.productService.getAllProducts(officeId).subscribe(data=>this.products = data);
+    this.productService.getAllProducts(officeId).subscribe(data=>{
+      this.isLoading = true;
+      this.products = data;
+      this.isLoading = false;
+    });
   }
 
   private refreshSales(officeId:any){
-    this.saleService.getAllSales(officeId).subscribe(data=>this.sales = data);
+    this.saleService.getAllSales(officeId).subscribe(data=>{
+      this.isLoading = true;
+      this.sales = data;
+      this.isLoading = false;
+    });
   }
 }

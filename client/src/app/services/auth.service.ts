@@ -21,4 +21,6 @@ export class AuthService {
   userReg(user:Registration):Observable<RegistrationResponse>{
     return this.http.post<RegistrationResponse>(this.regUrl,user);
   }
+
+
 }

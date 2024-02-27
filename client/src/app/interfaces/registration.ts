@@ -3,7 +3,8 @@ export interface Registration{
   password:string,
   firstname:string,
   lastname:string,
-  phone:string
+  phone:string,
+  officeId:number
 }
 
 export interface RegistrationResponse{
