@@ -38,7 +38,8 @@ export class SalesService {
   async getAll(officeId:number){
     const sales = await this.saleRepository.findAll({
       where:{officeId},
-      include:{all:true}
+      include:{all:true},
+      order:[['id','ASC']]
     })
     if(!sales){
       throw new HttpException("Неверный id офиса",HttpStatus.BAD_REQUEST);

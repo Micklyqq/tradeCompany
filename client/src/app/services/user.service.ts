@@ -3,6 +3,7 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment.development";
 import {Observable} from "rxjs";
 import {UserResponse} from "../interfaces/user";
+import {ServerMessage} from "../interfaces/server-message";
 
 @Injectable({
   providedIn: 'root'
@@ -15,4 +16,6 @@ export class UserService {
   getUsersByOfficeId(officeId:number):Observable<UserResponse[]>{
     return this.http.get<UserResponse[]>(environment.apiUrl+'/offices/workers/'+officeId);
   }
+
+
 }

@@ -23,6 +23,7 @@ export class ProductsService {
   async getAllProductsInWarehouse(warehouseId: number) {
     const products = await this.productRepository.findAll({
       where: { warehouseId,isDeleted:false },
+      order:[['id','ASC']]
     });
     return products;
   }

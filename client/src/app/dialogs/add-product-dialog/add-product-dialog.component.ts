@@ -73,14 +73,15 @@ export class AddProductDialogComponent implements OnInit{
         price:parseFloat(this.addProductForm.value.price),
         quantity:parseInt(this.addProductForm.value.quantity)
       }
-      this.productService.addProductToWarehouse(officeId,data).subscribe(()=>{
-
-      },(error)=>{
-        if(error && error.error && error.error.message){
-          this.error = error.error.message;
-          this.submitted = false;
-        }
-      })
+      this.productService.addProductToWarehouse(officeId,data).subscribe({
+          next:()=>{},
+          error:(error)=>{
+            if(error && error.error && error.error.message){
+              this.error = error.error.message;
+              this.submitted = false;
+            }
+          }
+    })
 
     }
   }

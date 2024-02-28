@@ -108,13 +108,7 @@ export class OfficesService {
     return await this.userRepository.findAll({
       where: {officeId},
       attributes:{exclude:['password','createdAt','updatedAt']},
-      include:[
-        {
-          model:Role,
-          through:{attributes:[]},
-          attributes:['id','name']
-        }
-      ]
+      order:[['id','ASC']]
     });
   }
 }

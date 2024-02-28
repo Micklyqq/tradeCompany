@@ -10,7 +10,7 @@ import {SalesComponent} from "./sales/sales.component";
 import {ProductComponent} from "./product/product.component";
 
 export const routes: Routes = [
-  {path:'',redirectTo:'/offices',pathMatch:'full'},
+  {path:'',redirectTo:'/auth',pathMatch:'full'},
   {path:'welcome',title:'Добро пожаловать',component:WelcomePageComponent},
   {path:'offices',title:'Офисы',component:OfficeListComponent},
   {path:'offices/:officeId',title:'Офисы',component:OfficeDetailsComponent},

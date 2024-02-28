@@ -25,7 +25,6 @@ export class ProductService {
   }
 
   delProduct(productId:number){
-    console.log(this.warehouseApi+productId)
     return this.http.delete<{productId:string}>(this.warehouseApi+productId).pipe(
       tap(()=>{
         this.productListChanged.next();
