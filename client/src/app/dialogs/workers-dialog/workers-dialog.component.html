@@ -52,48 +52,48 @@
 </div>
 
   <div *ngIf="dialogData.dialogName === 'updateUser'">
-    <h2 class="dialog-title">Добаление пользователя</h2>
+    <h2 class="dialog-title">Обновление пользователя</h2>
     <mat-dialog-content>
-      <form [formGroup]="addUserForm" class="dialog-content">
+      <form [formGroup]="updateUserForm" class="dialog-content">
         <mat-form-field>
           <mat-label>Email</mat-label>
           <input matInput formControlName="email" type="text">
-          <mat-error *ngIf="submitted && addUserForm.get('email')?.errors?.['required']">Должно быть заполнено</mat-error>
-          <mat-error *ngIf="submitted && addUserForm.get('email')?.errors?.['email']">Некорректный email</mat-error>
-          <mat-error *ngIf="submitted && addUserForm.get('email')?.errors?.['maxlength']">Не больше 64 символов</mat-error>
-
+          <mat-error *ngIf="submitted && updateUserForm.get('email')?.errors?.['email']">Некорректный email</mat-error>
+          <mat-error *ngIf="submitted && updateUserForm.get('email')?.errors?.['maxlength']">Не больше 64 символов</mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Пароль</mat-label>
           <input matInput formControlName="password" type="password">
-          <mat-error *ngIf="submitted && addUserForm.get('password')?.errors?.['required']">Должно быть заполнено</mat-error>
-          <mat-error *ngIf="submitted && addUserForm.get('password')?.errors?.['maxlength']">Не больше 32 символов </mat-error>
-          <mat-error *ngIf="submitted && addUserForm.get('password')?.errors?.['minlength']">Не меньше 8 символов</mat-error>
+          <mat-error *ngIf="submitted && updateUserForm.get('password')?.errors?.['maxlength']">Не больше 32 символов </mat-error>
+          <mat-error *ngIf="submitted && updateUserForm.get('password')?.errors?.['minlength']">Не меньше 8 символов</mat-error>
         </mat-form-field>
 
         <mat-form-field>
           <mat-label>Имя</mat-label>
           <input matInput formControlName="firstname" type="text">
-          <mat-error *ngIf="submitted && addUserForm.get('firstname')?.errors?.['required']">Должно быть заполнено</mat-error>
-          <mat-error *ngIf="submitted && addUserForm.get('firstname')?.errors?.['maxlength']">Не больше 32 символов</mat-error>
+          <mat-error *ngIf="submitted && updateUserForm.get('firstname')?.errors?.['maxlength']">Не больше 32 символов</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Фамилия</mat-label>
           <input matInput formControlName="lastname" type="text">
-          <mat-error *ngIf="submitted && addUserForm.get('lastname')?.errors?.['required']">Должно быть заполнено</mat-error>
-          <mat-error *ngIf="submitted && addUserForm.get('lastname')?.errors?.['maxlength']">Не больше 32 символов</mat-error>
+          <mat-error *ngIf="submitted && updateUserForm.get('lastname')?.errors?.['maxlength']">Не больше 32 символов</mat-error>
         </mat-form-field>
         <mat-form-field>
           <mat-label>Телефон</mat-label>
           <input matInput formControlName="phone" type="tel" appPhoneInput>
-          <mat-error *ngIf="submitted && addUserForm.get('lastname')?.errors?.['required']">Должно быть заполнено</mat-error>
+        </mat-form-field>
+        <mat-form-field *ngIf="roles">
+          <mat-label>Должность</mat-label>
+          <mat-select  formControlName="roleId">
+            <mat-option *ngFor="let role of roles" [value]="role.id">{{role.name}}</mat-option>
+          </mat-select>
         </mat-form-field>
       </form>
       <mat-error *ngIf="error">{{error}}</mat-error>
     </mat-dialog-content>
 
     <mat-dialog-actions>
-      <button type="submit" (click)="onSubmit()" class="dialog-button">Добавить</button>
+      <button type="submit" (click)="updateSubmit()" class="dialog-button">Обновить</button>
     </mat-dialog-actions>
   </div>

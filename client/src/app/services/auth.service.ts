@@ -4,6 +4,8 @@ import {Login,LoginResponse} from "../interfaces/login";
 import {Observable, Subject, tap} from "rxjs";
 import {environment} from "../../environments/environment.development";
 import {Registration, RegistrationResponse} from "../interfaces/registration";
+import {ServerMessage} from "../interfaces/server-message";
+import {UserUpdate} from "../interfaces/user";
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +28,17 @@ export class AuthService {
     );
   }
 
+  deleteWorker(userId:number):Observable<ServerMessage>{
+    return this.http.delete<ServerMessage>(environment.apiUrl+'/users/'+userId).pipe(
+      tap(()=>this.workersListChanged.next())
+    );
+  }
+
+  updateWorker(userId:number,userData:UserUpdate):Observable<ServerMessage>{
+    return this.http.put<ServerMessage>(environment.apiUrl+'/users/'+userId,userData).pipe(
+      tap(()=>this.workersListChanged.next())
+    );
+  }
   onWorkersListChanged(){
     return this.workersListChanged.asObservable();
   }

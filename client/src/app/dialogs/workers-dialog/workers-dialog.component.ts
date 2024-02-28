@@ -1,4 +1,4 @@
-import {Component, Inject, OnInit} from '@angular/core';
+import {Component, Inject, Input, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {
@@ -73,11 +73,12 @@ export class WorkersDialogComponent implements OnInit{
       roleId:['',[Validators.required]]
     }));
     this.updateUserForm = this.formBuilder.group(({
-      email:['',[Validators.required,Validators.email,Validators.maxLength(64)]],
-      password:['',[Validators.required],Validators.minLength(8),Validators.maxLength(32)],
-      firstname:['',[Validators.required],Validators.maxLength(32)],
-      lastname:['',[Validators.required],Validators.maxLength(32)],
-      phone:['',[Validators.required]],
+      email:['',[Validators.email,Validators.maxLength(64)]],
+      password:['',[Validators.minLength(8),Validators.maxLength(32)]],
+      firstname:['',[Validators.maxLength(32)]],
+      lastname:['',[Validators.maxLength(32)]],
+      phone:[''],
+      roleId:['']
     }))
     this.roleService.getAllRoles().subscribe(data=>{
       this.roles = data;
@@ -98,7 +99,7 @@ export class WorkersDialogComponent implements OnInit{
         roleId:parseInt(this.addUserForm.value.roleId)
       }
       this.authService.userReg(data).subscribe(()=>{
-
+      this.submitted = false;
       },(error)=>{
         if(error && error.error && error.error.message){
           this.error = error.error.message;
@@ -111,8 +112,8 @@ export class WorkersDialogComponent implements OnInit{
 
 
 
-  updateSubmit(productId:number){
-
+  updateSubmit(){
+    this.submitted = true;
     const formData = this.updateUserForm.value;
     let dataToSend:any = {};
     Object.keys(formData).forEach(key => {
@@ -120,6 +121,20 @@ export class WorkersDialogComponent implements OnInit{
         dataToSend[key] = formData[key];
       }
     });
+    if(this.dialogData.userId && this.updateUserForm.valid){
+     // console.log(this.updateUserForm.value.roleId)
+    this.authService.updateWorker(this.dialogData.userId,dataToSend).subscribe({
+      next:()=>{
+        this.submitted = false;
+      },
+      error:(error)=>{
+        if(error && error.error && error.error.message){
+          this.error = error.error.message;
+          this.submitted = false;
+        }
+      },
+    })
+      }
     // this.authService.userReg().subscribe(data=>data,(error)=>{
     //   if(error && error.error && error.error.message){
     //     throw new Error(error.error.message);
