@@ -17,6 +17,8 @@ interface UserCreateAttrs {
   firstname: string;
   lastname: string;
   phone:string;
+  officeId:number;
+  roleId:number;
 }
 
 @Table({ tableName: "users" })
@@ -50,13 +52,19 @@ export class User extends Model<User, UserCreateAttrs> {
   @Column({ type: DataType.STRING, allowNull: true, defaultValue: null })
   phone: string;
 
-  @BelongsToMany(() => Role, () => UserRoles)
-  roles: Role[];
+  // @BelongsToMany(() => Role, () => UserRoles)
+  // roles: Role[];
 
   @ForeignKey(()=>Office)
   officeId:number;
 
   @BelongsTo(()=>Office)
   office:Office
+
+  @ForeignKey(()=>Role)
+  roleId:number;
+
+  @BelongsTo(()=>Role)
+  role:Role;
 
 }

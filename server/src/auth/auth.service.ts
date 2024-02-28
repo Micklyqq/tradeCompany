@@ -31,18 +31,17 @@ export class AuthService {
         HttpStatus.BAD_REQUEST
       );
     }
-    const user = await this.userService.createUser(
+    const user:any = await this.userService.createUser(
       userDto
     );
     return {
       statusCode:HttpStatus.OK,
       message:'Работник успешно зарегистрирован',
-      user: user.email
     }
   }
 
   public async generateToken(user: User) {
-    const payload = { email: user.email, id: user.id, roles: user.roles };
+    const payload = { email: user.email, id: user.id, roles: user.roleId };
     return {
       token: this.jwtService.sign(payload),
     };
