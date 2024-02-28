@@ -1,19 +1,24 @@
 <div class="auth-content">
   <h1>Авторизация</h1>
 <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
-  <label for="email">Email:</label>
-  <input formControlName="email" id="email" type="text" placeholder="Введите email">
-  <div *ngIf="submitted && authForm.get('email')?.errors?.['required']" class="error">Поле не может быть пустым</div>
-  <div *ngIf="submitted && authForm.get('email')?.errors?.['email']" class="error">Неверный email</div>
-  <div *ngIf="submitted && authForm.get('email')?.errors?.['maxlength']" class="error">Длина не может превышать 64 символа</div>
-  <div *ngIf="submitted && authForm.get('email')?.errors?.['minlength']" class="error">Длина не может быть меньше 6 символов</div>
-  <label for="password">Password:</label>
-  <input formControlName="password" id="password" type="password" placeholder="Введите пароль">
-  <div *ngIf="submitted && authForm.get('password')?.errors?.['required']" class="error">Поле не может быть пустым</div>
-  <div *ngIf="submitted && authForm.get('password')?.errors?.['maxlength']" class="error">Длина не может превышать 32 символа</div>
-  <div *ngIf="submitted && authForm.get('password')?.errors?.['minlength']" class="error">Длина не может быть меньше 6 символов</div>
+  <mat-form-field>
+      <mat-label>Email:</mat-label>
+  <input matInput formControlName="email" id="email" type="text">
+  <mat-error *ngIf="submitted && authForm.get('email')?.errors?.['required']" class="error">Поле не может быть пустым</mat-error>
+  <mat-error *ngIf="submitted && authForm.get('email')?.errors?.['email']" class="error">Неверный email</mat-error>
+  <mat-error *ngIf="submitted && authForm.get('email')?.errors?.['maxlength']" class="error">Длина не может превышать 64 символа</mat-error>
+  <mat-error *ngIf="submitted && authForm.get('email')?.errors?.['minlength']" class="error">Длина не может быть меньше 6 символов</mat-error>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Пароль:</mat-label>
+  <input matInput formControlName="password" id="password" type="password" >
+  <mat-error *ngIf="submitted && authForm.get('password')?.errors?.['required']" class="error">Поле не может быть пустым</mat-error>
+  <mat-error *ngIf="submitted && authForm.get('password')?.errors?.['maxlength']" class="error">Длина не может превышать 32 символа</mat-error>
+  <mat-error *ngIf="submitted && authForm.get('password')?.errors?.['minlength']" class="error">Длина не может быть меньше 6 символов</mat-error>
+  </mat-form-field>
+  <mat-dialog-actions>
   <button type="submit">Авторизоваться</button>
-  <div *ngIf="error" class="error">{{error}}</div>
+  </mat-dialog-actions>
+  <mat-error *ngIf="error" class="error">{{error}}</mat-error>
 </form>
-  <p>Нет аккаунта? <span class="go-to-reg" routerLink="/registration">Зарегистрируйтесь</span></p>
 </div>

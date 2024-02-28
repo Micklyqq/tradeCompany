@@ -1,13 +1,8 @@
 .auth-content{
-  background-color: #013A40;
-  font-family: "Raleway", sans-serif;
-width: 35%;
-
   color: white;
-  margin: 0 auto;
-  margin-top: 20vh;
   padding: 2vw;
   border-radius: 5px;
+  width: 100%;
 }
 .auth-content form{
   display: flex;
@@ -16,15 +11,22 @@ width: 35%;
   font-weight: bold;
 }
 .auth-content button{
-  background-color: #05F2DB;
-  margin-top: 20px;
+  background-color: #40A3FF;
+  color: #FFFFFF;
+width: 100%;
+  height: 30px;
+  margin: 0 auto;
   border-radius: 10px;
+  border:0;
   cursor: pointer;
 }
 
 .auth-content button:hover{
-  background-color: red;
-  color: white;
+  background-color: indianred;
+}
+
+.auth-content button:active{
+  transform: translateY(3px);
 }
 
 .auth-content input{
@@ -32,6 +34,7 @@ width: 35%;
 }
 .auth-content h1{
   text-align: center;
+  color:black;
 }
 
 .error{
@@ -44,3 +47,11 @@ width: 35%;
   cursor: pointer;
 }
 
+:host{
+ width: 30%;
+  height: 40%;
+  background-color: #FFFFFF;
+margin: 0 auto;
+  margin-top: 200px;
+
+}
