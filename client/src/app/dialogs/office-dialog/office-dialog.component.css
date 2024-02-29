@@ -1,0 +1,25 @@
+.dialog-title{
+  margin-top: 10px;
+  text-align: center;
+}
+.dialog-content{
+  display: flex;
+  flex-direction: column;
+}
+.dialog-button{
+  background-color: #40A3FF;
+  color: #FFFFFF;
+  width: 50%;
+  height: 30px;
+  margin: 0 auto;
+  border-radius: 10px;
+  border:0;
+  cursor: pointer;
+}
+
+.dialog-button:hover{
+  background-color: indianred;
+}
+.dialog-button:active{
+  transform: translateY(3px);
+}

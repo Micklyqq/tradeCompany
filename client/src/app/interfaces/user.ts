@@ -1,7 +1,10 @@
 export interface UserResponse{
   id:number,
   officeId:number,
-  roleId:number,
+  role:{
+    id:number,
+    name:string,
+  },
   email:string,
   firstname:string,
   lastname:string,

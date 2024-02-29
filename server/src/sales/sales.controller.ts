@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Post} from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post, UseGuards} from "@nestjs/common";
 import { SalesService } from "./sales.service";
 import { CreateSaleDto } from "./dto/create-sale.dto";
 import {
@@ -9,6 +9,8 @@ import {
 } from "@nestjs/swagger";
 import { Sale } from "./sales.model";
 import {SalesByDateDto} from "./dto/sales-by-date.dto";
+import {Roles} from "../auth/decorators/roles-auth.decorator";
+import {RolesGuard} from "../auth/roles.guard";
 @ApiBearerAuth()
 @ApiTags("Продажи")
 @Controller("sales")
@@ -19,6 +21,8 @@ export class SalesController {
     summary: "Добавление продажи",
   })
   @ApiResponse({ status: 200, type: Sale })
+  @Roles('ADMIN','Директор','Менеджер по продажам')
+  @UseGuards(RolesGuard)
   @Post()
   create(@Body() createSale: CreateSaleDto) {
     return this.saleService.create(createSale);
@@ -46,6 +50,8 @@ export class SalesController {
     summary:"Удаление продажи",
   })
   @ApiResponse({status:200,type:Sale})
+  @Roles('ADMIN','Директор','Менеджер по продажам')
+  @UseGuards(RolesGuard)
   @Delete('/:id')
   delete(@Param('id') saleId:number){
     return this.saleService.delete(saleId);

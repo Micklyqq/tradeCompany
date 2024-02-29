@@ -1,4 +1,4 @@
-<div class="add-sale-button" (click)="openDialog('addSale',officeId)">Добавить продажу</div>
+<div *appHasRole="{roles:['ADMIN','Менеджер по продажам'],officeId:officeId? officeId:null}" class="add-sale-button" (click)="openDialog('addSale',officeId)">Добавить продажу</div>
 <div *ngIf="sales">
 <mat-spinner *ngIf="isLoading"></mat-spinner>
   <div class="sale-list">

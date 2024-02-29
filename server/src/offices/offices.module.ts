@@ -8,14 +8,19 @@ import { WarehouseModule } from "src/warehouse/warehouse.module";
 import { Sale } from "src/sales/sales.model";
 import { FilesModule } from "src/files/files.module";
 import {User} from "../users/users/users.model";
+import {RolesGuard} from "../auth/roles.guard";
+import {AuthModule} from "../auth/auth.module";
 
 @Module({
   controllers: [OfficesController],
-  providers: [OfficesService],
+  providers: [
+      OfficesService,
+  ],
   imports: [
     SequelizeModule.forFeature([Office, Warehouse, Sale,User]),
     WarehouseModule,
-    FilesModule
+    FilesModule,
+      AuthModule
   ],
 })
 export class OfficesModule {}

@@ -12,11 +12,12 @@ import {AuthService} from "../services/auth.service";
 import {RoleService} from "../services/role.service";
 import {RoleResponse} from "../interfaces/role";
 import {Subscription} from "rxjs";
+import {HasRoleDirective} from "../directives/has-role.directive";
 
 @Component({
   selector: 'app-workers',
   standalone: true,
-  imports: [MatButtonModule, MatTableModule, NgIf, MatIcon],
+    imports: [MatButtonModule, MatTableModule, NgIf, MatIcon, HasRoleDirective],
   templateUrl: './workers.component.html',
   styleUrl: './workers.component.css'
 })
@@ -33,10 +34,12 @@ export class WorkersComponent implements OnInit,OnDestroy{
 
   @Input() officeId:number | undefined;
   @ViewChild(MatTable) table: MatTable<UserResponse> | undefined
-  displayedColumns:string[] = ['ID','Email','Firstname','Lastname','Phone','Role','Actions']
+  displayedColumns:string[] = ['ID','Email','Firstname','Lastname','Phone','Role']
 
   workers:UserResponse[] | undefined;
   roleNames:string[] =[];
+
+
 
   subscription:Subscription[] = [];
   openDialog(dialogName:string,userId:number|null = null){
@@ -57,12 +60,27 @@ export class WorkersComponent implements OnInit,OnDestroy{
         })
       }));
 
+    this.userIsDirector();
+
+
     this.authService.onWorkersListChanged().subscribe(()=>this.refreshWorkers());
   }
   ngOnDestroy() {
     this.subscription.forEach((data)=>{
       data.unsubscribe();
     })
+  }
+
+  userIsDirector(){
+    const user = this.authService.jwtDecode();
+    if(user) {
+      if(user.role.name==="ADMIN"){
+        this.displayedColumns.push('Actions');
+      }
+      if(user.role.name==='Директор'&&user.officeId === this.officeId){
+        this.displayedColumns.push('Actions');
+      }
+    }
   }
 
 

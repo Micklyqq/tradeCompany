@@ -5,6 +5,10 @@ import {NgForOf, NgIf, NgOptimizedImage} from "@angular/common";
 import {environment} from "../../environments/environment.development";
 import {RouterLink} from "@angular/router";
 import {ImageLoaderService} from "../services/image-loader.service";
+import {HasRoleDirective} from "../directives/has-role.directive";
+import {MatDialog} from "@angular/material/dialog";
+import {AddProductDialogComponent} from "../dialogs/add-product-dialog/add-product-dialog.component";
+import {OfficeDialogComponent} from "../dialogs/office-dialog/office-dialog.component";
 
 
 @Component({
@@ -14,13 +18,14 @@ import {ImageLoaderService} from "../services/image-loader.service";
     NgForOf,
     NgIf,
     RouterLink,
-    NgOptimizedImage
+    NgOptimizedImage,
+    HasRoleDirective
   ],
   templateUrl: './office-list.component.html',
   styleUrl: './office-list.component.css'
 })
 export class OfficeListComponent implements OnInit{
-  constructor(private officeService:OfficeService,private imageLoader:ImageLoaderService) {
+  constructor(private officeService:OfficeService,private imageLoader:ImageLoaderService, public dialog:MatDialog) {
 
   }
 
@@ -30,6 +35,9 @@ export class OfficeListComponent implements OnInit{
   altImg:string = "../../assets/img/noImage.jpg"
 
   ngOnInit() {
+    this.officeService.onOfficeListChanged().subscribe(()=>{
+      this.refreshOffices();
+    })
     this.officeService.getOfficesList().subscribe((data:Office[])=>{
       this.officeList=data;
     });
@@ -39,4 +47,17 @@ export class OfficeListComponent implements OnInit{
 
 
   protected readonly environment = environment;
+
+  openDialog(dialogName:string,officeId:number | null = null) {
+    this.dialog.open(OfficeDialogComponent,{
+      data:{dialogName:dialogName},
+      width:'600px'
+    })
+  }
+
+  refreshOffices(){
+    this.officeService.getOfficesList().subscribe((data:Office[])=>{
+      this.officeList = data;
+    })
+  }
 }

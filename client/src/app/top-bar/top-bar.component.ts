@@ -26,5 +26,11 @@ export class TopBarComponent implements OnInit{
     this.officeIdService.getOfficeId().subscribe(officeId=>this.isOfficeDetailsPage = officeId);
   }
 
+    clearToken(){
+    localStorage.removeItem('token');
+      this.router.navigate(['/auth']).then(() => {
+        window.location.reload();
+      });
+    }
 
 }

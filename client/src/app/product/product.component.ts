@@ -9,6 +9,7 @@ import {SalesService} from "../services/sales.service";
 import {MatDialog} from "@angular/material/dialog";
 import {AddProductDialogComponent} from "../dialogs/add-product-dialog/add-product-dialog.component";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {HasRoleDirective} from "../directives/has-role.directive";
 
 @Component({
   selector: 'app-product',
@@ -18,7 +19,8 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     NgForOf,
     ReactiveFormsModule,
     CurrencyPipe,
-    MatProgressSpinner
+    MatProgressSpinner,
+    HasRoleDirective
   ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'

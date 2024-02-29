@@ -48,3 +48,26 @@ h2{
   min-width: 150px;
   max-width: 150px;
 }
+
+.add-office-button{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  background-color: #40A3FF;
+  color: #FFFFFF;
+  padding: 20px;
+  font-weight: bold;
+  width: 200px;
+  margin-left:20px;
+  border-radius: 10px;
+}
+
+.add-office-button:hover{
+  background-color: indianred;
+  cursor: pointer;
+}
+
+.add-office-button:active{
+  transform: translateY(3px);
+}

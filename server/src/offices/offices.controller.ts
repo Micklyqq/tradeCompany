@@ -9,7 +9,7 @@ import {
   Param,
   Post,
   Put,
-  UploadedFile,
+  UploadedFile, UseGuards,
   UseInterceptors,
   UsePipes,
 } from "@nestjs/common";
@@ -27,6 +27,8 @@ import { Office } from "./offices.model";
 import { FileInterceptor } from "@nestjs/platform-express";
 import {User} from "../users/users/users.model";
 import {UserResponseDto} from "../users/users/dto/user-response.dto";
+import {Roles} from "../auth/decorators/roles-auth.decorator";
+import {RolesGuard} from "../auth/roles.guard";
 
 @ApiBearerAuth()
 @ApiTags("Офисы")
@@ -41,6 +43,7 @@ export class OfficesController {
   create(@Body() officeDto: CreateOfficeDto) {
     return this.officeService.createOffice(officeDto);
   }
+
 
   @ApiOperation({ summary: "Получение всех офисов" })
   @ApiResponse({ status: 200, type: [Office] })
@@ -67,6 +70,8 @@ export class OfficesController {
   @ApiConsumes("multipart/form-data")
   @ApiResponse({ status: 200, type: Office })
   @UsePipes(ValidationPipe)
+  @Roles('ADMIN','Директор')
+  @UseGuards(RolesGuard)
   @Put("/:id")
   @UseInterceptors(FileInterceptor("logo"))
   update(
@@ -76,6 +81,8 @@ export class OfficesController {
   ) {
     return this.officeService.updateOffice(officeId, updateDto, logo);
   }
+  @Roles('ADMIN')
+  @UseGuards(RolesGuard)
   @ApiOperation({ summary: "Удаление офиса" })
   @ApiResponse({ status: 200, description: `Офис "id" был успешно удалён!` })
   @Delete("/:id")

@@ -19,6 +19,8 @@ export class CreateUserDto {
   @ApiProperty({ example: "+3753328389", description: "Телефон" })
   @IsString({ message: "Должно быть строкой" })
   readonly phone: string;
+  @ApiProperty({ example: "2", description: "id роли" })
   readonly roleId:number;
+  @ApiProperty({ example: "1", description: "id офиса" })
   readonly officeId:number;
 }

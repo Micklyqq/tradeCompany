@@ -6,7 +6,7 @@ import {
   Param,
   Post,
   Put,
-  UploadedFile,
+  UploadedFile, UseGuards,
   UseInterceptors,
   UsePipes,
   ValidationPipe,
@@ -24,6 +24,8 @@ import { Product } from "src/products/products.model";
 import { UpdateProductDto } from "src/products/dto/update-product.dto";
 import { ProductsService } from "src/products/products.service";
 import { FileInterceptor } from "@nestjs/platform-express";
+import {Roles} from "../auth/decorators/roles-auth.decorator";
+import {RolesGuard} from "../auth/roles.guard";
 
 @ApiBearerAuth()
 @ApiTags("Склады")
@@ -39,6 +41,8 @@ export class WarehouseController {
   })
   @ApiResponse({ status: 200, type: Product })
   @UsePipes(ValidationPipe)
+  @Roles('ADMIN','Директор','Заведующий складом')
+  @UseGuards(RolesGuard)
   @Post("/:id")
   addProduct(@Param("id") officeId: number, @Body() dto: CreateProductDto) {
     return this.warehouseService.addProduct(dto, officeId);
@@ -55,6 +59,8 @@ export class WarehouseController {
 
   @ApiOperation({ summary: "Удаление продукта, указывается ID продукта" })
   @ApiResponse({ status: 200, description: `Продукт был успешно удалён` })
+  @Roles('ADMIN','Директор','Заведующий складом')
+  @UseGuards(RolesGuard)
   @Delete("/:id")
   deleteProduct(@Param("id") productId: number) {
     return this.productService.deleteProduct(productId);
@@ -63,6 +69,8 @@ export class WarehouseController {
   @ApiOperation({ summary: "Обновление продукта, указывается ID продукта" })
   @ApiConsumes("multipart/form-data")
   @ApiResponse({ status: 200, type: Product })
+  @Roles('ADMIN','Директор','Заведующий складом')
+  @UseGuards(RolesGuard)
   @Put("/:id")
   @UseInterceptors(FileInterceptor("logo"))
   update(

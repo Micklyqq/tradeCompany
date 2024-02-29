@@ -97,4 +97,16 @@ export class UsersService {
   }
 
 
+  async getOne(userId: number) {
+    const user = await this.userRepository.findByPk(userId,{
+      attributes:{exclude:['password','createdAt','updatedAt']}
+    });
+    if(!user){
+      throw new HttpException(
+          'Такого пользователя не существует',
+          HttpStatus.BAD_REQUEST
+      )
+    }
+    return user;
+  }
 }

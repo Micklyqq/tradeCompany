@@ -8,3 +8,8 @@ export interface Office {
   werehouse:{},
   sales:[]
 }
+
+export interface CreateOffice{
+  name:string,
+  adress:string,
+}

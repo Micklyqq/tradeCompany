@@ -49,7 +49,9 @@ import {MatInputModule} from "@angular/material/input";
      this.subscription.push( this.authService.userAuth(this.authForm.value).subscribe(
        (data: any) => {
          localStorage.setItem("token",data.token);
-         this.router.navigate(['/offices'])
+         this.router.navigate(['/offices']).then(() => {
+           window.location.reload();
+         });
        },
        (error) => {
          if(error && error.error && error.error.message){

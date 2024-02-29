@@ -17,5 +17,9 @@ export class UserService {
     return this.http.get<UserResponse[]>(environment.apiUrl+'/offices/workers/'+officeId);
   }
 
+  getUserById(userId:number):Observable<UserResponse>{
+    return this.http.get<UserResponse>(environment.apiUrl+'/users/'+userId);
+  }
+
 
 }

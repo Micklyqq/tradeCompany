@@ -11,23 +11,25 @@ import {MatDialog} from "@angular/material/dialog";
 import {AddProductDialogComponent} from "../dialogs/add-product-dialog/add-product-dialog.component";
 import {SaleDialogComponent} from "../dialogs/sale-dialog/sale-dialog.component";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {HasRoleDirective} from "../directives/has-role.directive";
 
 @Component({
   selector: 'app-sales',
   standalone: true,
-  imports: [
-    NgIf,
-    NgForOf,
-    DatePipe,
-    AsyncPipe,
-    ReactiveFormsModule,
-    CurrencyPipe,
-    MatCard,
-    MatCardHeader,
-    MatCardTitle,
-    MatCardContent,
-    MatProgressSpinner
-  ],
+    imports: [
+        NgIf,
+        NgForOf,
+        DatePipe,
+        AsyncPipe,
+        ReactiveFormsModule,
+        CurrencyPipe,
+        MatCard,
+        MatCardHeader,
+        MatCardTitle,
+        MatCardContent,
+        MatProgressSpinner,
+        HasRoleDirective
+    ],
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
 })

@@ -1,5 +1,5 @@
 <div class="workers-root">
-  <button mat-raised-button class="add-worker-button" (click)="openDialog('addUser')">Добавить сотрудника</button>
+  <button *appHasRole="{roles:['ADMIN','Директор'],officeId:officeId? officeId:null}" mat-raised-button class="add-worker-button" (click)="openDialog('addUser')">Добавить сотрудника</button>
   <table *ngIf="workers" mat-table [dataSource]="workers" class="workers-table">
     <ng-container matColumnDef="ID">
       <th mat-header-cell *matHeaderCellDef>ID</th>
