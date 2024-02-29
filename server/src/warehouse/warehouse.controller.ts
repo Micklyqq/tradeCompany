@@ -5,7 +5,7 @@ import {
   Get,
   Param,
   Post,
-  Put,
+  Put, Query,
   UploadedFile, UseGuards,
   UseInterceptors,
   UsePipes,
@@ -55,6 +55,18 @@ export class WarehouseController {
   @Get("/:id")
   getAllProducts(@Param("id") officeId: number) {
     return this.warehouseService.getAllProducts(officeId);
+  }
+
+  @Get('/:id/pagination')
+  async getPaginationProducts(
+      @Param('id') warehouseId: number,
+      @Query('page') page:number = 1,
+      @Query('limit') limit:number = 10,
+  ) {
+
+    limit = limit > 100 ? 100 : limit; // Ограничиваем максимальный размер страницы
+    const offset = (page - 1) * limit;
+    return this.warehouseService.getPaginationProducts(warehouseId, offset, limit);
   }
 
   @ApiOperation({ summary: "Удаление продукта, указывается ID продукта" })

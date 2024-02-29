@@ -13,5 +13,10 @@
       </div>
     </div>
   </div>
+  <mat-paginator class="pagination" [length]="totalUsers"
+                 [pageSize]="pageSize"
+                 [pageIndex]="pageIndex"
+                 (page)="onPageChange($event)">
+  </mat-paginator>
 
 </div>

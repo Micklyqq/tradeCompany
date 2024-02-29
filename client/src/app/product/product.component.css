@@ -1,8 +1,21 @@
+:host{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+}
+.product-root{
+  margin: 0 auto;
+
+}
 .product-list{
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
+  flex:1;
+  width: 70vw;
+  min-height: 80vh;
+  margin-left: 15%;
 
 }
 .product-element{
@@ -98,5 +111,11 @@
 
 .change-product:active{
   transform: translateY(2px);
+}
+
+.pagination{
+  width: 50%;
+  margin: 0 auto;
+
 }
 
