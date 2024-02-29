@@ -7,6 +7,8 @@
 .sale-list{
   display: flex;
   flex-wrap: wrap;
+  width: 70vw;
+
 }
 .sale-element{
   padding: 10px;
@@ -37,7 +39,11 @@
 }
 
 .pagination{
+  position: fixed;
+  bottom: 0;
+  left: 50%; /* Расположить элемент посередине горизонтально */
   width: 50%;
-  margin: 0 auto;
+  transform: translateX(-50%); /* Центрирование элемента по горизонтали */
+
 
 }

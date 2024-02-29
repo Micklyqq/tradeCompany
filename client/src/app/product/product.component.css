@@ -14,7 +14,7 @@
   flex-wrap: wrap;
   flex:1;
   width: 70vw;
-  min-height: 80vh;
+  min-height: 50vh;
   margin-left: 15%;
 
 }
@@ -114,8 +114,12 @@
 }
 
 .pagination{
+  position: fixed;
+  bottom: 0;
+  left: 50%; /* Расположить элемент посередине горизонтально */
   width: 50%;
-  margin: 0 auto;
+  transform: translateX(-50%); /* Центрирование элемента по горизонтали */
+
 
 }
 

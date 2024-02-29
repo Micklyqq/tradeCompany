@@ -55,7 +55,7 @@ export class SalesComponent implements OnInit{
   products:ProductResponse[] | undefined;
 
   totalSales = 0;
-  pageSize = 21;
+  pageSize = 18;
   pageIndex = 0;
 
   isLoading = true;
