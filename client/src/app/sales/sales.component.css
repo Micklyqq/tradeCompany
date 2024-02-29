@@ -1,4 +1,9 @@
-
+:host{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+}
 .sale-list{
   display: flex;
   flex-wrap: wrap;
@@ -31,3 +36,8 @@
   transform: translateY(3px);
 }
 
+.pagination{
+  width: 50%;
+  margin: 0 auto;
+
+}

@@ -53,7 +53,7 @@ export class ProductComponent implements OnInit{
 
   isLoading = true;
 
-  totalUsers = 0;
+  totalProducts = 0;
   pageSize = 6;
   pageIndex = 0;
 
@@ -68,7 +68,7 @@ export class ProductComponent implements OnInit{
       })
       this.productService.getPaginationProducts(this.officeId,this.pageIndex+1,this.pageSize).subscribe((data)=>{
         this.products = data.rows;
-        this.totalUsers = data.count
+        this.totalProducts = data.count
         this.isLoading = false;
       });
 
@@ -92,7 +92,7 @@ openDialog(dialogName:string,productId:number|null=null){
     this.productService.getPaginationProducts(officeId,this.pageIndex+1,this.pageSize).subscribe((data)=>{
       this.isLoading = true;
       this.products = data.rows;
-      this.totalUsers = data.count;
+      this.totalProducts = data.count;
       this.isLoading = false;
     });
   }

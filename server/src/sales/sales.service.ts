@@ -47,6 +47,19 @@ export class SalesService {
     return sales;
   }
 
+  async getPaginationSales(officeId: number, offset: number, limit: number) {
+    const { count, rows } = await this.saleRepository.findAndCountAll({
+      where: { officeId:officeId },
+      order: [['date', 'ASC']],
+      include:{
+        model:Product
+      },
+      offset,
+      limit,
+    });
+    return { count, rows };
+  }
+
   async takeProductFromWarehouse(productId:number,quantity:number){
     const product = await this.productService.findProductById(productId);
     const takeProduct = product.quantity - quantity;

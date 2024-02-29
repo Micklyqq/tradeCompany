@@ -16,6 +16,11 @@
       </mat-card-content>
     </mat-card>
   </div>
+  <mat-paginator class="pagination" [length]="totalSales"
+                 [pageSize]="pageSize"
+                 [pageIndex]="pageIndex"
+                 (page)="onPageChange($event)">
+  </mat-paginator>
 
 </div>
 

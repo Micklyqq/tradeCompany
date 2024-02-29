@@ -21,3 +21,20 @@ export interface SalesByDate{
 startDate:Date,
 endDate?:Date,
 }
+
+export interface SaleResponsePagination{
+  count:number,
+  rows:[
+    {
+      id:number,
+      quantity:number,
+      date:string,
+      product:
+        {
+          name:string,
+          id:number,
+        }
+      amount:number,
+    }
+  ]
+}

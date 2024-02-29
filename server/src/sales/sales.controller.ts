@@ -1,4 +1,4 @@
-import {Body, Controller, Delete, Get, Param, Post, UseGuards} from "@nestjs/common";
+import {Body, Controller, Delete, Get, Param, Post, Query, UseGuards} from "@nestjs/common";
 import { SalesService } from "./sales.service";
 import { CreateSaleDto } from "./dto/create-sale.dto";
 import {
@@ -44,6 +44,18 @@ export class SalesController {
   @Get('/getAll/:id')
   getAll(@Param('id') officeId:number){
     return this.saleService.getAll(officeId);
+  }
+
+  @Get('/:id/pagination')
+  async getPaginationProducts(
+      @Param('id') officeId: number,
+      @Query('page') page:number = 1,
+      @Query('limit') limit:number = 10,
+  ) {
+
+    limit = limit > 100 ? 100 : limit; // Ограничиваем максимальный размер страницы
+    const offset = (page - 1) * limit;
+    return this.saleService.getPaginationSales(officeId, offset, limit);
   }
 
   @ApiOperation({
