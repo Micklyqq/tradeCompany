@@ -7,6 +7,8 @@ import { AddRoleDto } from "./dto/add-role.dto";
 import * as bcrypt from "bcryptjs";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import {AuthService} from "../../auth/auth.service";
+import {Product} from "../../products/products.model";
+import {Role} from "../../roles/roles.model";
 @Injectable()
 export class UsersService {
   constructor(
@@ -108,5 +110,20 @@ export class UsersService {
       )
     }
     return user;
+  }
+
+  async getPaginationUsers(officeId: number, offset: number, limit: number) {
+    const { count, rows } = await this.userRepository.findAndCountAll({
+      where: { officeId:officeId },
+      order: [['id', 'ASC']],
+      attributes:{exclude:['password','createdAt','updatedAt']},
+      include:{
+        model:Role,
+        attributes:{exclude:['description','createdAt','updatedAt']}
+      },
+      offset,
+      limit,
+    });
+    return { count, rows };
   }
 }

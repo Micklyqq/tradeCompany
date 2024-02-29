@@ -43,7 +43,7 @@ export class OfficeDetailsComponent implements OnInit,OnDestroy{
 
   officeIdFromRoute:number | undefined;
 
-  currentNavElement:string = 'sales';
+  currentNavElement:string = 'workers';
   dataIsLoading = true;
 
   director:string | undefined;

@@ -5,7 +5,7 @@ import {
   Get,
   Param,
   Post,
-  Put,
+  Put, Query,
   UseGuards,
   UsePipes,
 } from "@nestjs/common";
@@ -85,5 +85,17 @@ export class UsersController {
   @Get('/:id')
   getOne(@Param('id') userId:number){
     return this.userService.getOne(userId);
+  }
+
+  @Get('/:id/pagination')
+  async getPaginationUsers(
+      @Param('id') officeId: number,
+      @Query('page') page:number = 1,
+      @Query('limit') limit:number = 10,
+  ) {
+
+    limit = limit > 100 ? 100 : limit; // Ограничиваем максимальный размер страницы
+    const offset = (page - 1) * limit;
+    return this.userService.getPaginationUsers(officeId, offset, limit);
   }
 }

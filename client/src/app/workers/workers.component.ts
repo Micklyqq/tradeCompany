@@ -13,11 +13,12 @@ import {RoleService} from "../services/role.service";
 import {RoleResponse} from "../interfaces/role";
 import {Subscription} from "rxjs";
 import {HasRoleDirective} from "../directives/has-role.directive";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-workers',
   standalone: true,
-    imports: [MatButtonModule, MatTableModule, NgIf, MatIcon, HasRoleDirective],
+  imports: [MatButtonModule, MatTableModule, NgIf, MatIcon, HasRoleDirective, MatPaginator],
   templateUrl: './workers.component.html',
   styleUrl: './workers.component.css'
 })
@@ -39,6 +40,10 @@ export class WorkersComponent implements OnInit,OnDestroy{
   workers:UserResponse[] | undefined;
   roleNames:string[] =[];
 
+  totalSales = 0;
+  pageSize = 10;
+  pageIndex = 0;
+
 
 
   subscription:Subscription[] = [];
@@ -50,9 +55,12 @@ export class WorkersComponent implements OnInit,OnDestroy{
   }
   ngOnInit() {
     if(this.officeId){
-      this.subscription.push(this.userService.getUsersByOfficeId(this.officeId).subscribe(data=>{
-        this.workers = data;
-      }));
+      this.subscription.push(
+        this.userService.getPaginationUsers(this.officeId,this.pageIndex+1,this.pageSize).subscribe(data=>{
+          this.workers = data.rows;
+          this.totalSales = data.count;
+        })
+      );
     }
       this.subscription.push(this.roleService.getAllRoles().subscribe((data)=>{
         data.forEach((item)=>{
@@ -101,8 +109,17 @@ export class WorkersComponent implements OnInit,OnDestroy{
   refreshWorkers(){
     if(this.officeId){
       this.subscription.push(
-        this.userService.getUsersByOfficeId(this.officeId).subscribe(data=>this.workers = data)
+        this.userService.getPaginationUsers(this.officeId,this.pageIndex+1,this.pageSize).subscribe(data=>{
+          this.workers = data.rows;
+          this.totalSales = data.count;
+        })
       )
     }
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.refreshWorkers();
   }
 }
