@@ -13,10 +13,9 @@ export class UserResponseDto{
     readonly lastname:string;
     @ApiProperty({ example: "+3752384748" })
    readonly phone:string;
-    readonly roles:[
-        {
-            id:number,
-            name:string,
-        }
-    ]
+    @ApiProperty({ example: "{name:ADMIN,id:2}" })
+    readonly role:{
+        id:number,
+        name:string,
+    }
 }

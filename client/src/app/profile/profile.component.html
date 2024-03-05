@@ -1,1 +1,13 @@
-<p>profile works!</p>
+
+<div class="profile-root">
+  <img src="../../assets/img/profile-default.png">
+  <div class="profile-data" *ngIf="user">
+    <h1>Профиль</h1>
+    <p>Email: {{user.email}}</p>
+    <p>Имя: {{user.firstname}}</p>
+    <p>Фамилия: {{user.lastname}}</p>
+    <p>Телефон: {{user.phone}}</p>
+    <p>Место работы: <span class="go-to-office" (click)="goToOffice(office?.id)">{{office?.name}}</span></p>
+    <p>Должность: {{user.role.name}} </p>
+  </div>
+</div>

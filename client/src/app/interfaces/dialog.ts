@@ -12,4 +12,5 @@ export interface DialogSale{
 export interface DialogWorkers{
   dialogName:string,
   officeId:number,
+  userId?:number,
 }

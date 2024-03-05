@@ -6,6 +6,7 @@
     <li routerLink="/offices" [routerLinkActive]="['active']">Офисы</li>
     <li *ngIf="!token" routerLink="/auth" [routerLinkActive]="['active']">Авторизация</li>
     <li *ngIf="token" routerLink="/profile" [routerLinkActive]="['active']">Профиль</li>
+    <li *ngIf="token" (click)="clearToken()">Выйти</li>
 </ul>
 
 

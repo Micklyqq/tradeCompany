@@ -11,6 +11,7 @@ import { FilesModule } from "src/files/files.module";
   imports: [
     SequelizeModule.forFeature([Product, Warehouse, Sale]),
     FilesModule,
+
   ],
   exports: [ProductsService],
 })

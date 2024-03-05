@@ -7,6 +7,7 @@ import { Office } from "src/offices/offices.model";
 import { Product } from "src/products/products.model";
 import { ProductsModule } from "src/products/products.module";
 import { FilesModule } from "src/files/files.module";
+import {AuthModule} from "../auth/auth.module";
 
 @Module({
   providers: [WarehouseService],
@@ -15,6 +16,7 @@ import { FilesModule } from "src/files/files.module";
     SequelizeModule.forFeature([Warehouse, Office, Product]),
     ProductsModule,
     FilesModule,
+      AuthModule
   ],
   exports: [WarehouseService],
 })

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {Product, ProductResponse, UpdateProduct} from "../interfaces/product";
+import {Product, ProductResponse, ProductResponsePagination, UpdateProduct} from "../interfaces/product";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment.development";
 import {Observable, Subject, tap} from "rxjs";
@@ -16,6 +16,11 @@ export class ProductService {
   getAllProducts(officeId:number):Observable<ProductResponse[]>{
     return this.http.get<ProductResponse[]>(this.warehouseApi+officeId);
   }
+
+  getPaginationProducts(officeId:number,page:number,limit:number){
+    return this.http.get<ProductResponsePagination>(`${this.warehouseApi}${officeId}/pagination?page=${page}&limit=${limit}`);
+  }
+
   addProductToWarehouse(officeId:number,product:Product){
    return this.http.post<ProductResponse>(this.warehouseApi+officeId,product).pipe(
      tap(()=>{
@@ -25,7 +30,6 @@ export class ProductService {
   }
 
   delProduct(productId:number){
-    console.log(this.warehouseApi+productId)
     return this.http.delete<{productId:string}>(this.warehouseApi+productId).pipe(
       tap(()=>{
         this.productListChanged.next();

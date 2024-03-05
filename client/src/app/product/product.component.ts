@@ -1,6 +1,12 @@
 import {ChangeDetectionStrategy, Component, DoCheck, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {ProductService} from "../services/product.service";
-import {Product, ProductResponse, UpdateProduct} from "../interfaces/product";
+import {
+  PaginationRows,
+  Product,
+  ProductResponse,
+  ProductResponsePagination,
+  UpdateProduct
+} from "../interfaces/product";
 import {ActivatedRoute} from "@angular/router";
 import {CurrencyPipe, NgForOf, NgIf} from "@angular/common";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -9,6 +15,8 @@ import {SalesService} from "../services/sales.service";
 import {MatDialog} from "@angular/material/dialog";
 import {AddProductDialogComponent} from "../dialogs/add-product-dialog/add-product-dialog.component";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {HasRoleDirective} from "../directives/has-role.directive";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-product',
@@ -18,7 +26,9 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     NgForOf,
     ReactiveFormsModule,
     CurrencyPipe,
-    MatProgressSpinner
+    MatProgressSpinner,
+    HasRoleDirective,
+    MatPaginator
   ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
@@ -39,9 +49,13 @@ export class ProductComponent implements OnInit{
 
   productDefaultLogo = '../../assets/img/product-default.png'
 
-  products:ProductResponse[] | undefined;
+  products:PaginationRows[] | undefined;
 
   isLoading = true;
+
+  totalProducts = 0;
+  pageSize = 6;
+  pageIndex = 0;
 
 
   ngOnInit() {
@@ -52,8 +66,9 @@ export class ProductComponent implements OnInit{
       this.productService.onProductListChanged().subscribe(()=>{
         this.refreshProducts(this.officeId);
       })
-      this.productService.getAllProducts(this.officeId).subscribe((data)=>{
-        this.products = data;
+      this.productService.getPaginationProducts(this.officeId,this.pageIndex+1,this.pageSize).subscribe((data)=>{
+        this.products = data.rows;
+        this.totalProducts = data.count
         this.isLoading = false;
       });
 
@@ -69,17 +84,23 @@ openDialog(dialogName:string,productId:number|null=null){
 }
 
   deleteProduct(productId:number){
-    this.productService.delProduct(productId).subscribe(data=>{
-      this.products = this.products?.filter(item=>item.id!==Number(data.productId));
+    this.productService.delProduct(productId).subscribe(()=>{
     });
   }
 
   refreshProducts(officeId:any){
-    this.productService.getAllProducts(officeId).subscribe((data)=>{
+    this.productService.getPaginationProducts(officeId,this.pageIndex+1,this.pageSize).subscribe((data)=>{
       this.isLoading = true;
-      this.products = data
+      this.products = data.rows;
+      this.totalProducts = data.count;
       this.isLoading = false;
     });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.refreshProducts(this.officeId);
   }
 
 

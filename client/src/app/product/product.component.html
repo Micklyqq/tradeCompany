@@ -1,4 +1,4 @@
-<div class="add-product-button" (click)="openDialog('addProduct')">Добавить на склад</div>
+<div *appHasRole="{roles:['ADMIN','Заведующий складом'],officeId:officeId? officeId:null}" class="add-product-button" (click)="openDialog('addProduct')">Добавить на склад</div>
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 <div *ngIf="products && !isLoading" class="product-root">
   <div class="product-list">
@@ -13,5 +13,10 @@
       </div>
     </div>
   </div>
+  <mat-paginator class="pagination" [length]="totalProducts"
+                 [pageSize]="pageSize"
+                 [pageIndex]="pageIndex"
+                 (page)="onPageChange($event)">
+  </mat-paginator>
 
 </div>

@@ -38,12 +38,26 @@ export class SalesService {
   async getAll(officeId:number){
     const sales = await this.saleRepository.findAll({
       where:{officeId},
-      include:{all:true}
+      include:{all:true},
+      order:[['id','ASC']]
     })
     if(!sales){
       throw new HttpException("Неверный id офиса",HttpStatus.BAD_REQUEST);
     }
     return sales;
+  }
+
+  async getPaginationSales(officeId: number, offset: number, limit: number) {
+    const { count, rows } = await this.saleRepository.findAndCountAll({
+      where: { officeId:officeId },
+      order: [['date', 'ASC']],
+      include:{
+        model:Product
+      },
+      offset,
+      limit,
+    });
+    return { count, rows };
   }
 
   async takeProductFromWarehouse(productId:number,quantity:number){

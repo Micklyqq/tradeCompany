@@ -1,0 +1,36 @@
+:host{
+  width: 100%;
+}
+
+
+
+.profile-root{
+  display: flex;
+background-color: #FFFFFF;
+margin: 5%;
+ padding: 10px;
+
+}
+
+.profile-root img{
+  max-width: 50%;
+  max-height: 50%;
+}
+.profile-root p{
+  font-size: 20px;
+  margin-top: 30px;
+}
+
+h1{
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.go-to-office{
+  cursor: pointer;
+}
+.go-to-office:hover{
+  font-weight: bold;
+  color: #40A3FF;
+}
+

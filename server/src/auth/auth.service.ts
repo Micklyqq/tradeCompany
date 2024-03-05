@@ -10,6 +10,7 @@ import { UserLoginDto } from "src/users/users/dto/user-login.dto";
 import { UsersService } from "src/users/users/users.service";
 import * as bcrypt from "bcryptjs";
 import { User } from "src/users/users/users.model";
+import {UserResponseDto} from "../users/users/dto/user-response.dto";
 
 @Injectable()
 export class AuthService {
@@ -31,18 +32,20 @@ export class AuthService {
         HttpStatus.BAD_REQUEST
       );
     }
-    const user = await this.userService.createUser(
+    const user:any = await this.userService.createUser(
       userDto
     );
     return {
       statusCode:HttpStatus.OK,
       message:'Работник успешно зарегистрирован',
-      user: user.email
     }
   }
 
-  public async generateToken(user: User) {
-    const payload = { email: user.email, id: user.id, roles: user.roles };
+  public async generateToken(user: UserResponseDto) {
+    const payload = {
+      email: user.email,firstname:user.firstname,lastname:user.lastname,phone:user.phone,
+      id: user.id, officeId:user.officeId,role:{id:user.role.id,name:user.role.name}
+    };
     return {
       token: this.jwtService.sign(payload),
     };

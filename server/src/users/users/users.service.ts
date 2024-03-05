@@ -7,6 +7,8 @@ import { AddRoleDto } from "./dto/add-role.dto";
 import * as bcrypt from "bcryptjs";
 import { UpdateUserDto } from "./dto/update-user.dto";
 import {AuthService} from "../../auth/auth.service";
+import {Product} from "../../products/products.model";
+import {Role} from "../../roles/roles.model";
 @Injectable()
 export class UsersService {
   constructor(
@@ -29,16 +31,14 @@ export class UsersService {
       ...dto,
       password: hashPassword,
     });
-    let role = await this.roleService.getRoleById(dto.roleId);
-    if(!role){
-      throw new HttpException(
-          'Роль не найдена',
-          HttpStatus.BAD_REQUEST
-      );
+
+    if(user){
+      return {
+        code:HttpStatus.OK,
+        message:"Пользователь зарегистрирован"
+      }
     }
-    await user.$set("roles", [role.id]);
-    user.roles = [role];
-    return user;
+
   }
 
   async getAllUsers() {
@@ -56,9 +56,8 @@ export class UsersService {
 
   async addRole(dto: AddRoleDto) {
     const user = await this.userRepository.findByPk(dto.userId);
-    const role = await this.roleService.getRoleByName(dto.rolename);
-    if (role && user) {
-      await user.$add("roles", role.id);
+    if (user) {
+      await this.userRepository.update({roleId:dto.roleId},{where:{id:dto.userId}});
       return dto;
     }
     throw new HttpException(
@@ -78,11 +77,11 @@ export class UsersService {
     if (updateDto.password) {
       const hashPassword = bcrypt.hash(updateDto.password, 5);
 
-      user.update({ ...updateDto, password: hashPassword });
+      await user.update({ ...updateDto, password: hashPassword });
       return user;
     }
 
-    user.update(updateDto);
+    await user.update(updateDto);
     return user;
   }
   async deleteUser(userId: number) {
@@ -100,4 +99,31 @@ export class UsersService {
   }
 
 
+  async getOne(userId: number) {
+    const user = await this.userRepository.findByPk(userId,{
+      attributes:{exclude:['password','createdAt','updatedAt']}
+    });
+    if(!user){
+      throw new HttpException(
+          'Такого пользователя не существует',
+          HttpStatus.BAD_REQUEST
+      )
+    }
+    return user;
+  }
+
+  async getPaginationUsers(officeId: number, offset: number, limit: number) {
+    const { count, rows } = await this.userRepository.findAndCountAll({
+      where: { officeId:officeId },
+      order: [['id', 'ASC']],
+      attributes:{exclude:['password','createdAt','updatedAt']},
+      include:{
+        model:Role,
+        attributes:{exclude:['description','createdAt','updatedAt']}
+      },
+      offset,
+      limit,
+    });
+    return { count, rows };
+  }
 }

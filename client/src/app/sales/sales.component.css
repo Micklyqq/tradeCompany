@@ -1,7 +1,14 @@
-
+:host{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  flex: 1;
+}
 .sale-list{
   display: flex;
   flex-wrap: wrap;
+  width: 70vw;
+
 }
 .sale-element{
   padding: 10px;
@@ -31,3 +38,12 @@
   transform: translateY(3px);
 }
 
+.pagination{
+  position: fixed;
+  bottom: 0;
+  left: 50%; /* Расположить элемент посередине горизонтально */
+  width: 50%;
+  transform: translateX(-50%); /* Центрирование элемента по горизонтали */
+
+
+}

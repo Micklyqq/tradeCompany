@@ -1,3 +1,6 @@
+<div *appHasRole="{roles:['ADMIN'],officeId:null}" class="add-office-button" (click)="openDialog('add-office')">
+  Добавить офис
+</div>
 <div class="office-list">
     <div *ngFor="let office of officeList" class="office-element">
       <img [src]="environment.apiUrl + '/' + office.logo" alt="NOT FOUND" (error)="onImageLoadError($event)">
@@ -8,4 +11,5 @@
       <div  class="go-to-office-button" [routerLink]="['/offices',office.id]">Перейти</div>
     </div>
 </div>
+
 

@@ -3,11 +3,13 @@ import { InjectModel } from "@nestjs/sequelize";
 import { Warehouse } from "./warehouse.model";
 import { ProductsService } from "src/products/products.service";
 import { CreateProductDto } from "src/products/dto/create-product.dto";
+import {Product} from "../products/products.model";
 
 @Injectable()
 export class WarehouseService {
   constructor(
     @InjectModel(Warehouse) private warehouseRepository: typeof Warehouse,
+    @InjectModel(Product) private productRepository: typeof Product,
     private productService: ProductsService
   ) {}
 
@@ -53,5 +55,15 @@ export class WarehouseService {
       warehouse.id
     );
     return products;
+  }
+
+  async getPaginationProducts(warehouseId: number, offset: number, limit: number) {
+    const { count, rows } = await this.productRepository.findAndCountAll({
+      where: { warehouseId:warehouseId, isDeleted: false },
+      order: [['id', 'ASC']],
+      offset,
+      limit,
+    });
+    return { count, rows };
   }
 }

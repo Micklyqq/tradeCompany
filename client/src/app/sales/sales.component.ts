@@ -11,6 +11,8 @@ import {MatDialog} from "@angular/material/dialog";
 import {AddProductDialogComponent} from "../dialogs/add-product-dialog/add-product-dialog.component";
 import {SaleDialogComponent} from "../dialogs/sale-dialog/sale-dialog.component";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {HasRoleDirective} from "../directives/has-role.directive";
+import {MatPaginator, PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-sales',
@@ -26,7 +28,9 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     MatCardHeader,
     MatCardTitle,
     MatCardContent,
-    MatProgressSpinner
+    MatProgressSpinner,
+    HasRoleDirective,
+    MatPaginator
   ],
   templateUrl: './sales.component.html',
   styleUrl: './sales.component.css'
@@ -50,6 +54,10 @@ export class SalesComponent implements OnInit{
 
   products:ProductResponse[] | undefined;
 
+  totalSales = 0;
+  pageSize = 18;
+  pageIndex = 0;
+
   isLoading = true;
 
   ngOnInit() {
@@ -60,9 +68,10 @@ export class SalesComponent implements OnInit{
       this.saleService.onSaleListChanged().subscribe(()=>{
         this.refreshSales(this.officeId);
       })
-     this.saleService.getAllSales(this.officeId).subscribe(data=>{
+     this.saleService.getPaginationSales(this.officeId,this.pageIndex+1,this.pageSize).subscribe(data=>{
        this.isLoading = true;
-       this.sales = data;
+       this.sales = data.rows;
+       this.totalSales = data.count;
        this.isLoading = false;
      });
    this.productService.getAllProducts(this.officeId).subscribe((data)=>{
@@ -108,10 +117,17 @@ export class SalesComponent implements OnInit{
   }
 
   private refreshSales(officeId:any){
-    this.saleService.getAllSales(officeId).subscribe(data=>{
+    this.saleService.getPaginationSales(officeId,this.pageIndex+1,this.pageSize).subscribe((data)=>{
       this.isLoading = true;
-      this.sales = data;
+      this.sales = data.rows;
+      this.totalSales = data.count;
       this.isLoading = false;
     });
+  }
+
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.refreshSales(this.officeId);
   }
 }

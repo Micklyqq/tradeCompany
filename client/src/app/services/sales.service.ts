@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import {SaleAdd, SaleResponse, SalesByDate} from "../interfaces/sale";
+import {SaleAdd, SaleResponse, SaleResponsePagination, SalesByDate} from "../interfaces/sale";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment.development";
 import {Observable, Subject, tap} from "rxjs";
 import {TopSellers} from "../interfaces/topSellers";
+import {ProductResponsePagination} from "../interfaces/product";
 
 @Injectable({
   providedIn: 'root'
@@ -44,5 +45,9 @@ export class SalesService {
 
   getSalesByDate(interval:SalesByDate){
     return this.http.post<SaleResponse[]>(this.salesApi+'salesByDate',interval)
+  }
+
+  getPaginationSales(officeId:number,page:number,limit:number){
+    return this.http.get<SaleResponsePagination>(`${this.salesApi}${officeId}/pagination?page=${page}&limit=${limit}`);
   }
 }
