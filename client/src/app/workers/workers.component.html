@@ -31,7 +31,7 @@
       <td mat-cell *matCellDef="let element">{{element.roles[0].name}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="Actions">
+    <ng-container matColumnDef="Actions" fxFlex="200px">
       <th mat-header-cell *matHeaderCellDef>Действия</th>
       <td mat-cell *matCellDef="let element">
         <button mat-button color="primary" (click)="editWorker(element.id)">
